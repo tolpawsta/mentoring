@@ -3,13 +3,16 @@ using System;
 
 namespace ExceptionHandlingConvertToIntLibruary
 {
-    public static class Convert
+    public static class ExHConvert
     {
         public static int ToInt(string input)
         {
-            return 2;
+            int result;            
+                result = int.Parse(input);            
+            return result;
+
         }
-        public static bool TryToInt(string? input,out int result)
+        public static bool TryToInt(string? input, out int result)
         {
             result = 0;
             return true;
