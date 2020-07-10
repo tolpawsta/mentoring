@@ -18,48 +18,80 @@ using Task.Data;
 
 namespace SampleQueries
 {
-	[Title("LINQ Module")]
-	[Prefix("Linq")]
-	public class LinqSamples : SampleHarness
-	{
+    [Title("LINQ Module")]
+    [Prefix("Linq")]
+    public class LinqSamples : SampleHarness
+    {
 
-		private DataSource dataSource = new DataSource();
+        private DataSource dataSource = new DataSource();
 
-		[Category("Restriction Operators")]
-		[Title("Where - Task 1")]
-		[Description("This sample uses the where clause to find all elements of an array with a value less than 5.")]
-		public void Linq1()
-		{
-			int[] numbers = { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
 
-			var lowNums =
-				from num in numbers
-				where num < 5
-				select num;
+        [Category("Grouping Operators")]
+        [Title("Where - Task1")]
+        [Description("This sample uses where clause to find all customers whose total turnover less than value of X")]
 
-			Console.WriteLine("Numbers < 5:");
-			foreach (var x in lowNums)
-			{
-				Console.WriteLine(x);
-			}
-		}
+        public void Linq1()
+        {
+            var totalSum = 5000;
+            var customers = dataSource.Customers
+                                      .Where(c => c.Orders
+                                                    .Sum(o => o.Total) > totalSum)
+                                      .Select(c => new
+                                      {
+                                          Id = c.CustomerID,
+                                          TotalSum = c.Orders.Sum(o => o.Total)
+                                      });
+            foreach (var c in customers)
+            {
+                ObjectDumper.Write(c);
+            }
+        }
 
-		[Category("Restriction Operators")]
-		[Title("Where - Task 2")]
-		[Description("This sample return return all presented in market products")]
+        [Category("Restriction Operators")]
+        [Title("GroupJoin - Task2")]
+        [Description("This sample return all suppliers for each costomers whose stay int same County and City")]
 
-		public void Linq2()
-		{
-			var products =
-				from p in dataSource.Products
-				where p.UnitsInStock > 0
-				select p;
+        public void Linq2()
+        {
 
-			foreach (var p in products)
-			{
-				ObjectDumper.Write(p);
-			}
-		}
+            var customersSuppliers = dataSource.Customers.GroupJoin(
+                                        dataSource.Suppliers,
+                                        c => new { c.Country, c.City },
+                                        s => new { s.Country, s.City },
+                                        (c, suppliers) => new
+                                        {
+                                            ID = c.CustomerID,
+                                            c.City,
+                                            Suppliers = suppliers.Select(s => new { s.SupplierName, s.City })
+                                        }
+                                                                    );
 
-	}
+            foreach (var c in customersSuppliers)
+            {
+                ObjectDumper.Write(c);
+            }
+        }
+
+        [Category("Projection Operators")]
+        [Title("SelectMany - Task2")]
+        [Description("This sample return all suppliers for each costomers whose stay int same County and City")]
+
+        public void Linq02()
+        {
+            var customersSuppliers = dataSource.Customers.Select(c => new
+            {
+                ID = c.CustomerID,
+                c.City,
+                Suppliers = dataSource.Customers
+                                     .SelectMany(customer => dataSource.Suppliers
+                                                                       .Where(s => s.City == customer.City && s.Country == customer.Country))
+            }
+            );
+
+            foreach (var c in customersSuppliers)
+            {
+                ObjectDumper.Write(c);
+            }
+        }
+    }
 }
