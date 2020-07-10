@@ -7,6 +7,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -28,7 +29,7 @@ namespace SampleQueries
 
         [Category("Grouping Operators")]
         [Title("Where - Task1")]
-        [Description("This sample uses where clause to find all customers whose total turnover less than value of X")]
+        [Description("This sample uses where clause to find all customers whose total turnover more than value of X")]
 
         public void Linq1()
         {
@@ -91,6 +92,47 @@ namespace SampleQueries
             foreach (var c in customersSuppliers)
             {
                 ObjectDumper.Write(c);
+            }
+        }
+        [Category("Quantifiers")]
+        [Title("Any - Task3")]
+        [Description("This sample return all customers whose have any orders with total more than value of X")]
+
+        public void Linq3()
+        {
+            var totalSum = 10000;
+            var customers = dataSource.Customers
+                                        .Where(c => c.Orders
+                                                            .Any(o => o.Total > totalSum))
+                                        .Select(c => new
+                                        {
+                                            ID = c.CustomerID,
+                                            OrderTotal = c.Orders.Select(o=>o.Total).First(total => total > totalSum)
+                                        });           
+
+            foreach (var c in customers)
+            {
+                ObjectDumper.Write(c);
+            }
+        }
+        [Category("Ordering Operators")]
+        [Title("Min - Task4")]
+        [Description("This sample return all customers indicating the month from which year they became customers")]
+
+        public void Linq4()
+        {
+            const int MONTH_COUNT_FORMAT = -9;
+            var customers = dataSource.Customers.Where(c=>c.Orders.Count()>0)
+                                                .Select(c => new
+                                                                {
+                                                                ID = c.CustomerID,
+                                                                DateBecame = c.Orders.Select(o => o.OrderDate).Min()
+                                                                });            
+                                        
+            
+            foreach (var c in customers)
+            {
+                Console.WriteLine($"ID={c.ID}  Month={c.DateBecame.ToString("MMMM", CultureInfo.CreateSpecificCulture("en-US")),MONTH_COUNT_FORMAT} Year={c.DateBecame.Year}");
             }
         }
     }
