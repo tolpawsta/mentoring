@@ -4,4 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NLog" Version="4.7.2" />
+    <PackageReference Include="NLog.Config" Version="4.7.2" />
+    <PackageReference Include="NLog.Schema" Version="4.7.2" />
+  </ItemGroup>
+
 </Project>
