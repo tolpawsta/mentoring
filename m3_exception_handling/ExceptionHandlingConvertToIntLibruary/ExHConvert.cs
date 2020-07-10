@@ -42,7 +42,7 @@ namespace ExceptionHandlingConvertToIntLibruary
             {
                 throw new FormatException($"Input {nameof(input)} is empty.");
             }
-            bool isNegativeNumber = CanBeNegativeNumber(input);
+            bool isNegativeNumber = CanBeNegativeNumber(input.Trim());
             var result = 0L;
             if (!isNegativeNumber && input.Contains('-'))
             {
