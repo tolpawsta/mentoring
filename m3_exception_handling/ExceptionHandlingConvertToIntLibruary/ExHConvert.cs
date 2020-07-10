@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
+using NLog;
 using System;
 using System.Linq;
 
@@ -7,6 +8,7 @@ namespace ExceptionHandlingConvertToIntLibruary
 {
     public static class ExHConvert
     {
+        private static ILogger logger = LogManager.GetCurrentClassLogger();
         public static bool TryToInt(string? input, out int result)
         {            
             var isParsed = false;
@@ -16,9 +18,17 @@ namespace ExceptionHandlingConvertToIntLibruary
                 result = ToInt(input);
                 isParsed = true;
             }
-            catch
+            catch(ArgumentNullException ex)
             {
-                
+                logger.Info(ex.Message, ex.StackTrace);
+            }
+            catch (FormatException ex)
+            {
+                logger.Info(ex.Message, ex.StackTrace);
+            }
+            catch (OverflowException ex)
+            {
+                logger.Info(ex.Message, ex.StackTrace);
             }
             return isParsed; 
         }
