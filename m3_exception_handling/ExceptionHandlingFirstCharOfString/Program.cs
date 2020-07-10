@@ -1,4 +1,5 @@
-﻿using ExceptionHandlingFirstCharOfString.Exceptions;
+﻿using ExceptionHandlingConvertToIntLibruary;
+using ExceptionHandlingFirstCharOfString.Exceptions;
 using Microsoft.Extensions.Configuration;
 using NLog;
 using System;
@@ -20,7 +21,7 @@ namespace ExceptionHandlingFirstCharOfString
 
         private static void StartWithConfig(IConfiguration configuration)
         {
-            StringHandler stringHandler = new StringHandler();
+            var stringHandler = new StringHandler();
             var commanLineKey = configuration["ReadFile"];
             if (!String.IsNullOrEmpty(commanLineKey))
             {
@@ -70,7 +71,7 @@ namespace ExceptionHandlingFirstCharOfString
             var pathFile = configuration["FileToRead:PathFile"];
             try
             {
-                if (!int.TryParse(configuration["MaxCountReadLine"], out int maxCountReadLine))
+                if (!ExHConvert.TryToInt(configuration["MaxCountReadLine"], out int maxCountReadLine))
                 {
                     throw new FormatException($"The value if {nameof(maxCountReadLine)} must be int. Please check it.");
                 }
@@ -103,6 +104,6 @@ namespace ExceptionHandlingFirstCharOfString
             {
                 logger.Error(ex.Message, ex.StackTrace);
             }
-        }
+        }        
     }
 }
