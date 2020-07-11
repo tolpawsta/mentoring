@@ -137,7 +137,7 @@ namespace SampleQueries
         }
         [Category("Ordering Operators")]
         [Title("OrderBy, ThenBy - Task5")]
-        [Description("This sample return all customers indicating the month from which year they became customers")]
+        [Description("This sample return all customers from task4 ordering by month, then by year, then by sum total orders (from max to min) and by Name")]
 
         public void Linq5()
         {
@@ -155,6 +155,28 @@ namespace SampleQueries
                                                 .ThenBy(cd => cd.Name);
 
 
+
+            foreach (var c in customers)
+            {
+                ObjectDumper.Write(c);
+            }
+        }
+        [Category("Quantifiers")]
+        [Title("Any, All - Task6")]
+        [Description("This sample return all customers whose postal code has not only digits, region is null or empty, operator code is empty")]
+
+        public void Linq6()
+        {
+            var customers = dataSource.Customers.Where(c => c.Phone.IndexOf('(') < 0 && c.Phone.IndexOf(')') < 0)
+                .Where(c=>!c.PostalCode.All(s=>char.IsDigit(s)))
+                .Where(c=>String.IsNullOrEmpty(c.Region))
+                .Select(c=>new
+                {
+                    Name=c.CustomerID,
+                    c.Phone,
+                    c.PostalCode,
+                    Region="region is empty"
+                });
 
             foreach (var c in customers)
             {
