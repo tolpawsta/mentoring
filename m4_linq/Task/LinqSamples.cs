@@ -107,32 +107,58 @@ namespace SampleQueries
                                         .Select(c => new
                                         {
                                             ID = c.CustomerID,
-                                            OrderTotal = c.Orders.Select(o=>o.Total).First(total => total > totalSum)
-                                        });           
+                                            OrderTotal = c.Orders.Select(o => o.Total).First(total => total > totalSum)
+                                        });
 
             foreach (var c in customers)
             {
                 ObjectDumper.Write(c);
             }
         }
-        [Category("Ordering Operators")]
+        [Category("Oggregate Operators")]
         [Title("Min - Task4")]
         [Description("This sample return all customers indicating the month from which year they became customers")]
 
         public void Linq4()
         {
             const int MONTH_COUNT_FORMAT = -9;
-            var customers = dataSource.Customers.Where(c=>c.Orders.Count()>0)
+            var customers = dataSource.Customers.Where(c => c.Orders.Count() > 0)
                                                 .Select(c => new
-                                                                {
-                                                                ID = c.CustomerID,
-                                                                DateBecame = c.Orders.Select(o => o.OrderDate).Min()
-                                                                });            
-                                        
-            
+                                                {
+                                                    ID = c.CustomerID,
+                                                    DateBecame = c.Orders.Select(o => o.OrderDate).Min()
+                                                });
+
+
             foreach (var c in customers)
             {
                 Console.WriteLine($"ID={c.ID}  Month={c.DateBecame.ToString("MMMM", CultureInfo.CreateSpecificCulture("en-US")),MONTH_COUNT_FORMAT} Year={c.DateBecame.Year}");
+            }
+        }
+        [Category("Ordering Operators")]
+        [Title("OrderBy, ThenBy - Task5")]
+        [Description("This sample return all customers indicating the month from which year they became customers")]
+
+        public void Linq5()
+        {
+            var customers = dataSource.Customers.Where(c => c.Orders.Count() > 0)
+                                                .Select(c => new
+                                                {
+                                                    c.Orders.Select(o => o.OrderDate).Min().Month,
+                                                    c.Orders.Select(o => o.OrderDate).Min().Year,
+                                                    OrderTotals = c.Orders.Select(o => o.Total).Sum(),
+                                                    Name = c.CustomerID,
+                                                })
+                                                .OrderBy(cd => cd.Month)
+                                                .ThenBy(cd => cd.Year)
+                                                .ThenByDescending(cd => cd.OrderTotals)
+                                                .ThenBy(cd => cd.Name);
+
+
+
+            foreach (var c in customers)
+            {
+                ObjectDumper.Write(c);
             }
         }
     }
