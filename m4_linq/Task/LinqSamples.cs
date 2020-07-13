@@ -168,19 +168,90 @@ namespace SampleQueries
         public void Linq6()
         {
             var customers = dataSource.Customers.Where(c => c.Phone.IndexOf('(') < 0 && c.Phone.IndexOf(')') < 0)
-                .Where(c=>!c.PostalCode?.All(s=>char.IsDigit(s))??false)
-                .Where(c=>String.IsNullOrEmpty(c.Region))
-                .Select(c=>new
+                .Where(c => !c.PostalCode?.All(s => char.IsDigit(s)) ?? false)
+                .Where(c => String.IsNullOrEmpty(c.Region))
+                .Select(c => new
                 {
-                    Name=c.CustomerID,
+                    Name = c.CustomerID,
                     c.Phone,
                     c.PostalCode,
-                    Region="region is empty"
+                    Region = "region is empty"
                 });
 
             foreach (var c in customers)
             {
                 ObjectDumper.Write(c);
+            }
+        }
+        [Category("Grouping and Ordering Operators")]
+        [Title("GroupBy, OrderBy - Task7")]
+        [Description("This sample return all products groupby category, inner groupby in stock, orderby price")]
+
+        public void Linq7()
+        {
+            var products = dataSource.Products.Select(p => new
+            {
+                p.ProductName,
+                CategiryGroups = dataSource.Products.GroupBy(pr => pr.Category)
+                                                    .Select(cg => new
+                                                    {
+                                                        Categoty = cg.Key,
+                                                        UnitsInStockGroups = cg.GroupBy(cp => cp.UnitsInStock)
+                                                                    .Select(sg => new
+                                                                    {
+                                                                        UnitInStok = sg.Key,
+                                                                        OrderedProducts = sg.OrderBy(up => up.UnitPrice)
+                                                                    })
+                                                    })
+            });
+
+
+            foreach (var p in products)
+            {
+                foreach (var c in p.CategiryGroups)
+                {
+                    Console.WriteLine($"Category: {c.Categoty}");
+                    foreach (var us in c.UnitsInStockGroups)
+                    {
+                        Console.WriteLine($"UnitsInStok: {us.UnitInStok}");
+                        foreach (var op in us.OrderedProducts)
+                        {
+                            Console.WriteLine($" Name: {p.ProductName}  Price: {op.UnitPrice}");
+                        }
+                    }
+                }
+            }
+        }
+        [Category("Grouping and Ordering Operators")]
+        [Title("GroupBy, OrderBy - Task7")]
+        [Description("This sample return all products groupby category, inner groupby in stock, orderby price")]
+
+        public void Linq07()
+        {
+            var productsGroup = dataSource.Products.GroupBy(p => p.Category).Select(cg => new
+            {
+                Category = cg.Key,
+                UnitsInStockGroup = cg.GroupBy(p => p.UnitsInStock).Select(us => new
+                {
+                    UnitInStok = us.Key,
+                    OrderedProducts = us.OrderBy(p => p.UnitPrice)
+                })
+            });
+
+
+
+
+            foreach (var p in productsGroup)
+            {
+               Console.WriteLine($"Category: {p.Category} ");
+                foreach (var us in p.UnitsInStockGroup)
+                {
+                    Console.WriteLine($" UnitsInStok: {us.UnitInStok}");
+                    foreach (var product in us.OrderedProducts)
+                    {
+                        Console.WriteLine($" Product: {product.ProductName} Price: {product.UnitPrice}");                        
+                    }
+                }
             }
         }
     }
