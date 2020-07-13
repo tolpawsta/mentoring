@@ -168,7 +168,7 @@ namespace SampleQueries
         public void Linq6()
         {
             var customers = dataSource.Customers.Where(c => c.Phone.IndexOf('(') < 0 && c.Phone.IndexOf(')') < 0)
-                .Where(c=>!c.PostalCode.All(s=>char.IsDigit(s)))
+                .Where(c=>!c.PostalCode?.All(s=>char.IsDigit(s))??false)
                 .Where(c=>String.IsNullOrEmpty(c.Region))
                 .Select(c=>new
                 {
