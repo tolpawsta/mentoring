@@ -63,26 +63,19 @@ namespace SampleQueries
             }
             );
             */
-            var customersSuppliers = dataSource.Customers.SelectMany(c => dataSource.Suppliers.Where(s => s.City == c.City && s.Country == c.Country)
-                                                                                              .Select(s => new
-                                                                                              {
-                                                                                                  c.CustomerID,
-                                                                                                  c.City,
-                                                                                                  s.SupplierName
-                                                                                              }));
+            var customersSuppliers = dataSource.Customers.SelectMany(c => dataSource.Suppliers
+                                                                                    .Where(s => s.City == c.City && s.Country == c.Country)
+                                                                                    .Select(s => new
+                                                                                    {
+                                                                                        c.CustomerID,
+                                                                                        c.City,
+                                                                                        s.SupplierName
+                                                                                    })
+                                                                    );
             foreach (var item in customersSuppliers)
             {
                 ObjectDumper.Write(item);
-            }
-            /*
-            foreach (var customer in customersSuppliers)
-            {
-                ObjectDumper.Write($"Customer ID: {customer.ID} Sity: {customer.City}");
-                foreach (var supplier in customer.Suppliers)
-                {
-                    ObjectDumper.Write($"Supplier Name: {supplier.SupplierName} City: {supplier.City}");
-                }
-            }*/
+            }            
         }
         [Category("Join Operators")]
         [Title("GroupJoin - Task002")]
