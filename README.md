@@ -6,6 +6,6 @@
 
 :white_check_mark: Mudule 2 Advanced to C#
 
-:black_square_button: Module 3 Exception handling
+:white_check_mark: Module 3 Exception handling
 
 :black_square_button: Module 4 LINQ
