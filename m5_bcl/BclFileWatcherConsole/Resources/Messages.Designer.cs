@@ -70,6 +70,15 @@ namespace BclFileWatcherConsole.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        internal static string Attempted_access_to_the_puth {
+            get {
+                return ResourceManager.GetString("Attempted access to the puth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на File.
         /// </summary>
         internal static string File {

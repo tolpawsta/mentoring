@@ -4,8 +4,8 @@ namespace BclFileWatcherConsole.Configuration
 {
     public class DefaultDirectoryElement : ConfigurationElement
     {
-        [ConfigurationProperty("path",IsRequired =true)]
-        [StringValidator(InvalidCharacters =null,MinLength =2)]
-        public string Path => (string)this["path"];
+        [ConfigurationProperty("path", IsRequired = true)]
+        [StringValidator(InvalidCharacters = "", MaxLength = 4)]
+        public string Path => (string) this["path"];
     }
 }

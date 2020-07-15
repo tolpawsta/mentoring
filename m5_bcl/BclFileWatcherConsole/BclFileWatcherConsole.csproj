@@ -6,14 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="App.config" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ApplicationDefinition Include="App.config" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
   </ItemGroup>
 
@@ -33,12 +29,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Application.config">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    <None Update="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="User.config">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
 </Project>

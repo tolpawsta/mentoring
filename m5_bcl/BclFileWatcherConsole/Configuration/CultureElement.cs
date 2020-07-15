@@ -4,7 +4,7 @@ namespace BclFileWatcherConsole.Configuration
 {
     public class CultureElement:ConfigurationElement
     {
-        [ConfigurationProperty("name")]
+        [ConfigurationProperty("name",DefaultValue ="en-US")]
         [StringValidator(InvalidCharacters =null)]
         public string Name => (string) this["name"];
     }

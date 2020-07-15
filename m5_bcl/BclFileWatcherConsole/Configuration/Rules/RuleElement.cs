@@ -7,16 +7,16 @@ namespace BclFileWatcherConsole.Configuration.Rules
 {
     public class RuleElement : ConfigurationElement
     {
-        [ConfigurationProperty("fileNamePattern", IsKey = true)]
+        [ConfigurationProperty("fileNamePattern", IsKey = true,DefaultValue ="")]
         public string FileNamePattern => (string) base["fileNamePattern"];
         
-        [ConfigurationProperty("pathDirMoveTo")]
+        [ConfigurationProperty("pathDirMoveTo",DefaultValue ="dirMoveTo")]
         public string DirectoryMoveTo => (string) base["pathDirMoveTo"];
 
-        [ConfigurationProperty("shoudAddCounter")]
+        [ConfigurationProperty("shoudAddCounter",DefaultValue =false)]
         public bool ShoudAddCounter => (bool) base["shoudAddCounter"];
         
-        [ConfigurationProperty("shoudAddMoveDate")]
+        [ConfigurationProperty("shoudAddMoveDate",DefaultValue =false)]
         public bool ShoudAddMoveDate => (bool) base["shoudAddMoveDate"];
     }
 }

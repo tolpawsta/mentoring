@@ -98,18 +98,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="File" xml:space="preserve">
-    <value>Файл</value>
-  </data>
-  <data name="renamed" xml:space="preserve">
-    <value>переименован</value>
-  </data>
-  <data name="Something Wrong" xml:space="preserve">
-    <value>Что-то пошло не так</value>
+    <value>File</value>
   </data>
   <data name="All right" xml:space="preserve">
-    <value>Все хорошо</value>
+    <value>All right</value>
+  </data>
+  <data name="renamed" xml:space="preserve">
+    <value>renamed</value>
+  </data>
+  <data name="Something Wrong" xml:space="preserve">
+    <value>Something Wrong</value>
   </data>
   <data name="Attempted access to the puth" xml:space="preserve">
-    <value>Попытка получить доступ к пути, которого нет на диске</value>
+    <value>Attempted to access a path that is not on the disk.</value>
   </data>
 </root>
