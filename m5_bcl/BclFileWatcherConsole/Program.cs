@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BclFileWatcherConsole.Configuration;
+using System;
+using System.Configuration;
 
 namespace BclFileWatcherConsole
 {
@@ -6,6 +8,8 @@ namespace BclFileWatcherConsole
     {
         static void Main(string[] args)
         {
+            var config = ConfigurationManager.GetSection("appSection") as UserAppCofiguration;
+            Console.WriteLine(config.ApplicationName);
             Console.WriteLine("Hello World!");
         }
     }

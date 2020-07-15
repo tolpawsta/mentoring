@@ -103,4 +103,10 @@
   <data name="renamed" xml:space="preserve">
     <value>переименован</value>
   </data>
+  <data name="Something Wrong" xml:space="preserve">
+    <value>Что-то пошло не так</value>
+  </data>
+  <data name="All right" xml:space="preserve">
+    <value>Все хорошо</value>
+  </data>
 </root>

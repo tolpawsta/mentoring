@@ -4,6 +4,7 @@ using System.Configuration;
 
 namespace BclFileWatcherConsole.Configuration
 {
+    
     public class UserAppCofiguration : ConfigurationSection
     {
         [ConfigurationProperty("appName")]

@@ -123,4 +123,10 @@
   <data name="renamed" xml:space="preserve">
     <value>renamed</value>
   </data>
+  <data name="Something Wrong" xml:space="preserve">
+    <value>Something Wrong</value>
+  </data>
+  <data name="All right" xml:space="preserve">
+    <value>All right</value>
+  </data>
 </root>

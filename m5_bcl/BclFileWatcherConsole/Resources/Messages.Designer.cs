@@ -61,6 +61,15 @@ namespace BclFileWatcherConsole.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на All right.
+        /// </summary>
+        internal static string All_right {
+            get {
+                return ResourceManager.GetString("All right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на File.
         /// </summary>
         internal static string File {
@@ -75,6 +84,15 @@ namespace BclFileWatcherConsole.Resources {
         internal static string renamed {
             get {
                 return ResourceManager.GetString("renamed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Something Wrong.
+        /// </summary>
+        internal static string Something_Wrong {
+            get {
+                return ResourceManager.GetString("Something Wrong", resourceCulture);
             }
         }
     }
