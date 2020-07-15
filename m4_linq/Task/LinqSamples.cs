@@ -75,7 +75,7 @@ namespace SampleQueries
             foreach (var item in customersSuppliers)
             {
                 ObjectDumper.Write(item);
-            }            
+            }
         }
         [Category("Join Operators")]
         [Title("GroupJoin - Task002")]
@@ -95,7 +95,6 @@ namespace SampleQueries
                                             Suppliers = suppliers.Select(s => new { s.SupplierName, s.City })
                                         }
                                                                     );
-
             foreach (var customer in customersSuppliers)
             {
                 ObjectDumper.Write($"Customer ID: {customer.ID} Sity: {customer.City}");
@@ -119,7 +118,6 @@ namespace SampleQueries
                                             ID = c.CustomerID,
                                             OrderTotal = c.Orders.Select(o => o.Total).First(total => total > totalSum)
                                         });
-
             foreach (var c in customers)
             {
                 ObjectDumper.Write(c);
@@ -138,8 +136,6 @@ namespace SampleQueries
                                                     ID = c.CustomerID,
                                                     DateBecame = c.Orders.Select(o => o.OrderDate).Min()
                                                 });
-
-
             foreach (var c in customers)
             {
                 Console.WriteLine($"ID={c.ID}  Month={c.DateBecame.ToString("MMMM", CultureInfo.CreateSpecificCulture("en-US")),MONTH_COUNT_FORMAT} Year={c.DateBecame.Year}");
@@ -164,9 +160,6 @@ namespace SampleQueries
                                                 .ThenBy(cd => cd.Year)
                                                 .ThenByDescending(cd => cd.aggregateOrderTotals)
                                                 .ThenBy(cd => cd.Name);
-
-
-
             foreach (var c in customers)
             {
                 ObjectDumper.Write(c);
@@ -188,7 +181,6 @@ namespace SampleQueries
                     c.PostalCode,
                     Region = "region is empty"
                 });
-
             foreach (var c in customers)
             {
                 ObjectDumper.Write(c);
@@ -216,8 +208,6 @@ namespace SampleQueries
                                                                     })
                                                     })
                                      });
-
-
             foreach (var p in products)
             {
                 foreach (var c in p.CategiryGroups)
@@ -249,10 +239,6 @@ namespace SampleQueries
                     OrderedProducts = us.OrderBy(p => p.UnitPrice)
                 })
             });
-
-
-
-
             foreach (var p in productsGroup)
             {
                 Console.WriteLine($"Category: {p.Category} ");
@@ -278,7 +264,6 @@ namespace SampleQueries
             var groupProductByPrice = dataSource.Products.GroupBy(p => p.UnitPrice < cheapPriceUpperBorder
                                                                       ? "Cheap"
                                                                       : p.UnitPrice < averagePriceUpperBorder ? "Average" : "High");
-
             foreach (var group in groupProductByPrice)
             {
                 ObjectDumper.Write($"{group.Key} Price");
@@ -286,15 +271,15 @@ namespace SampleQueries
                 {
                     ObjectDumper.Write($"Name: {p.ProductName} Price: {p.UnitPrice}");
                 }
-
             }
         }
         [Category("Grouping and Ordering Operators")]
         [Title("GroupBy, OrderBy - Task009")]
-        [Description("!!!!!This sample return average profitability of each city and average intensity")]
+        [Description("This sample return average profitability of each city and average intensity")]
 
         public void Linq9()
         {
+            //TODO: Remake without datasorce.Customers but on current customer
             var profitOfCities = dataSource.Customers.GroupBy(c => c.City)
                                                      .Select(g => new
                                                      {
@@ -303,14 +288,10 @@ namespace SampleQueries
                                                          Intensity = g.Average(c => c.Orders.Count())
                                                      })
                                                      .OrderBy(p => p.City);
-
-
-
             foreach (var prof in profitOfCities)
             {
                 ObjectDumper.Write(prof);
             }
-
         }
         [Category("Grouping and Ordering Operators")]
         [Title("GroupJoin, OrderBy - Task010")]
@@ -353,9 +334,6 @@ namespace SampleQueries
                                                                                })
                                                                                .OrderBy(p => p.Month)
                                            });
-
-
-
             foreach (var s in statistics)
             {
                 ObjectDumper.Write($"Customer {s.ID}");
@@ -375,7 +353,6 @@ namespace SampleQueries
                     ObjectDumper.Write(ms);
                 }
             }
-
         }
     }
 }
