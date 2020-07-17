@@ -8,6 +8,8 @@
 
 :white_check_mark: Module 3 Exception handling
 
-:black_square_button: Module 4 LINQ
+:white_check_mark: Module 4 LINQ
 
-:black_square_button: Module 5 BCL
+:white_check_mark: Module 5 BCL
+
+:black_square_button:: Module 6 Reflection
