@@ -6,9 +6,10 @@ using System.Text;
 
 namespace BclFileWatcherConsole.Interfaces
 {
-    public interface IWatcherListener
-    {
-        void FileSystemEventHandle(object s, FileSystemEventArgs e);
+    public interface IWatcherLogger:IHandler,ISubscriber
+    {        
+        void RenamedEventHandler(object s, RenamedEventArgs e);
         void ErrorEventHandler(object s, ErrorEventArgs e);
+        
     }
 }

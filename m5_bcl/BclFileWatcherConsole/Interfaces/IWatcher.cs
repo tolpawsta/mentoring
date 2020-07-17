@@ -8,9 +8,10 @@ namespace BclFileWatcherConsole.Interfaces
     public interface IWatcher
     {
         event FileSystemEventHandler FileSystemEvent;
+        event EventHandler<RenamedEventArgs> RenamedEvent;
         event ErrorEventHandler ErrorEvent;
-        event EventHandler StartWatchEvent;
-        event EventHandler StopWatchEvent;
+        event EventHandler<FileSystemInfo> StartWatchEvent;
+        event EventHandler<FileSystemInfo> StopWatchEvent;
         void StartWatch();
         void StopWatch();
     }

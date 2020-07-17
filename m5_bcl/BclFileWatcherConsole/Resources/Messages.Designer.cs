@@ -79,11 +79,74 @@ namespace BclFileWatcherConsole.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        internal static string changed {
+            get {
+                return ResourceManager.GetString("changed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        internal static string created {
+            get {
+                return ResourceManager.GetString("created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        internal static string deleted {
+            get {
+                return ResourceManager.GetString("deleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на File.
         /// </summary>
         internal static string File {
             get {
                 return ResourceManager.GetString("File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        internal static string Found {
+            get {
+                return ResourceManager.GetString("Found", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        internal static string matching_pattern {
+            get {
+                return ResourceManager.GetString("matching_pattern", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        internal static string moved_from {
+            get {
+                return ResourceManager.GetString("moved_from", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        internal static string Press_CTRL_C_to_stop {
+            get {
+                return ResourceManager.GetString("Press_CTRL_C_to_stop", resourceCulture);
             }
         }
         
@@ -97,11 +160,47 @@ namespace BclFileWatcherConsole.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        internal static string Section_in_config__do_not_exists {
+            get {
+                return ResourceManager.GetString("Section_in_config__do_not_exists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Something Wrong.
         /// </summary>
         internal static string Something_Wrong {
             get {
                 return ResourceManager.GetString("Something Wrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        internal static string The_watcher_started_watching_the_folder {
+            get {
+                return ResourceManager.GetString("The_watcher_started_watching_the_folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        internal static string The_watcher_stopped_watching_the_folder {
+            get {
+                return ResourceManager.GetString("The_watcher_stopped_watching_the_folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        internal static string to {
+            get {
+                return ResourceManager.GetString("to", resourceCulture);
             }
         }
     }

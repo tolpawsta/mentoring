@@ -8,8 +8,9 @@ namespace BclFileWatcherConsole.Impl.Watchers
     {
         public event FileSystemEventHandler FileSystemEvent;
         public event ErrorEventHandler ErrorEvent;
-        public event EventHandler StartWatchEvent;
-        public event EventHandler StopWatchEvent;
+        public event EventHandler<FileSystemInfo> StartWatchEvent;
+        public event EventHandler<FileSystemInfo> StopWatchEvent;
+        public event EventHandler<RenamedEventArgs> RenamedEvent;
 
         private FileSystemWatcher _watcher;
         private string _directoryPath;
@@ -22,9 +23,11 @@ namespace BclFileWatcherConsole.Impl.Watchers
         public void StartWatch()
         {
             SubscribeOnEvents();
+            _watcher.NotifyFilter = NotifyFilters.FileName                                 
+                                 | NotifyFilters.DirectoryName;
             _watcher.IncludeSubdirectories = true;
             _watcher.EnableRaisingEvents = true;
-            StartWatchEvent?.Invoke(this, new EventArgs());
+            StartWatchEvent?.Invoke(this, new DirectoryInfo(_directoryPath));
         }
 
         public void Dispose()
@@ -33,8 +36,8 @@ namespace BclFileWatcherConsole.Impl.Watchers
         }
         public void StopWatch()
         {
+            StopWatchEvent?.Invoke(this, new DirectoryInfo(_directoryPath));
             UnSubscribeOnEvents();
-            StopWatchEvent?.Invoke(this, new EventArgs());
         }
 
         private void SubscribeOnEvents()
@@ -42,7 +45,7 @@ namespace BclFileWatcherConsole.Impl.Watchers
             _watcher.Created += (s, e) => FileSystemEvent?.Invoke(s, e);
             _watcher.Deleted += (s, e) => FileSystemEvent?.Invoke(s, e);
             _watcher.Changed += (s, e) => FileSystemEvent?.Invoke(s, e);
-            _watcher.Renamed += (s, e) => FileSystemEvent?.Invoke(s, e);
+            _watcher.Renamed += (s, e) => RenamedEvent?.Invoke(s, e);
             _watcher.Error += (s, e) => ErrorEvent?.Invoke(s, e);
         }
         private void UnSubscribeOnEvents()
@@ -50,7 +53,7 @@ namespace BclFileWatcherConsole.Impl.Watchers
             _watcher.Created -= (s, e) => FileSystemEvent?.Invoke(s, e);
             _watcher.Deleted -= (s, e) => FileSystemEvent?.Invoke(s, e);
             _watcher.Changed -= (s, e) => FileSystemEvent?.Invoke(s, e);
-            _watcher.Renamed -= (s, e) => FileSystemEvent?.Invoke(s, e);
+            _watcher.Renamed -= (s, e) => RenamedEvent?.Invoke(s, e);
             _watcher.Error -= (s, e) => ErrorEvent?.Invoke(s, e);
         }
     }

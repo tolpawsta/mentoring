@@ -112,4 +112,37 @@
   <data name="Attempted access to the puth" xml:space="preserve">
     <value>Attempted to access a path that is not on the disk.</value>
   </data>
+  <data name="The_watcher_started_watching_the_folder" xml:space="preserve">
+    <value>The watcher started watching the folder</value>
+  </data>
+  <data name="The_watcher_stopped_watching_the_folder" xml:space="preserve">
+    <value>The watcher stopped watching the folder</value>
+  </data>
+  <data name="created" xml:space="preserve">
+    <value>created</value>
+  </data>
+  <data name="deleted" xml:space="preserve">
+    <value>deleted</value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value>to</value>
+  </data>
+  <data name="Press_CTRL_C_to_stop" xml:space="preserve">
+    <value>Press CTRL+C to stop</value>
+  </data>
+  <data name="Section_in_config__do_not_exists" xml:space="preserve">
+    <value>Section in config do not exists</value>
+  </data>
+  <data name="changed" xml:space="preserve">
+    <value>changed</value>
+  </data>
+  <data name="moved_from" xml:space="preserve">
+    <value>moved from</value>
+  </data>
+  <data name="Found" xml:space="preserve">
+    <value>Found</value>
+  </data>
+  <data name="matching_pattern" xml:space="preserve">
+    <value>matching pattern</value>
+  </data>
 </root>

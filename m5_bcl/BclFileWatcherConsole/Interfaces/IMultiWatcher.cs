@@ -6,7 +6,8 @@ namespace BclFileWatcherConsole.Interfaces
 {
     public interface IMultiWatcher
     {
-        public void StartWatch(IEnumerable<string> directoiesPath);
+        public List<IWatcher> Watchers { get;}
+        public void StartWatch();
         public void StopWatch();
     }
 }

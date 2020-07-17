@@ -112,4 +112,37 @@
   <data name="Attempted access to the puth" xml:space="preserve">
     <value>Попытка получить доступ к пути, которого нет на диске</value>
   </data>
+  <data name="The_watcher_started_watching_the_folder" xml:space="preserve">
+    <value>Наблюдатель начал наблюдение за папкой</value>
+  </data>
+  <data name="The_watcher_stopped_watching_the_folder" xml:space="preserve">
+    <value>Наблюдатель остановил наблюдение за папкой</value>
+  </data>
+  <data name="created" xml:space="preserve">
+    <value>создан</value>
+  </data>
+  <data name="deleted" xml:space="preserve">
+    <value>удален</value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value>в</value>
+  </data>
+  <data name="Press_CTRL_C_to_stop" xml:space="preserve">
+    <value>Нажмите комбинацию CTRL+C чтобы выйти</value>
+  </data>
+  <data name="Section_in_config__do_not_exists" xml:space="preserve">
+    <value>Раздел в конфиге не существует</value>
+  </data>
+  <data name="changed" xml:space="preserve">
+    <value>изменён</value>
+  </data>
+  <data name="moved_from" xml:space="preserve">
+    <value>перемещен из</value>
+  </data>
+  <data name="Found" xml:space="preserve">
+    <value>Найден</value>
+  </data>
+  <data name="matching_pattern" xml:space="preserve">
+    <value>соответствующий шаблону</value>
+  </data>
 </root>
