@@ -3,13 +3,8 @@ using BclFileWatcherConsole.Configuration.Rules;
 using BclFileWatcherConsole.Helpers;
 using BclFileWatcherConsole.Interfaces;
 using System;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Xml;
 
 namespace BclFileWatcherConsole.Impl.Listeners
 {
@@ -19,14 +14,19 @@ namespace BclFileWatcherConsole.Impl.Listeners
         private CultureHelper _culture;
         private AppConfigurationSection _config;
         private int _counter;
-        private object _lockObject = new object();
-
+        
         public WatcherHandler(AppConfigurationSection config)
         {
             _culture = CultureHelper.Source;
             _config = config;
             _culture.SetCurrentCulture(_config);
             _counter = 0;
+        }
+
+        public void Subscribe(IWatcher watcher)
+        {
+            watcher.FileSystemEvent += FileSystemEventHandle;
+            watcher.RenamedEvent += Watcher_RenamedEvent;
         }
 
         public void Subscribe(IMultiWatcher multiWatcher)
@@ -49,50 +49,71 @@ namespace BclFileWatcherConsole.Impl.Listeners
             {
                 return;
             }
-
+            FileInfo file = new FileInfo(e.FullPath);
+            bool isFileMatch = false;
             foreach (RuleElement rule in _config.Rules)
             {
-                string pattern = rule.FileNamePattern;
+                string pattern = rule.FileNamePattern; 
                 if (Regex.IsMatch(e.Name, pattern))
                 {
-                    FileInfo file = new FileInfo(e.FullPath);
+                    isFileMatch = true;
                     NotifyService.OnFileFound(file, rule.FileNamePattern);
-                    Move(file, rule, _config);
                     Rename(ref file, rule);
-
+                    Move(file, rule.DirectoryMoveTo);
                 }
+                
+            }
+            if(!isFileMatch)
+            {
+                Move(file, _config.DefaultDirectory.Path);
             }
         }
 
-        private void Move(FileInfo file, RuleElement rule, AppConfigurationSection config)
+        private void Move(FileInfo file, string destFolder)
         {
-            string destFolder = rule.DirectoryMoveTo;
+
             string sourceFileName = file.FullName;
-            if (String.IsNullOrEmpty(destFolder))
+            try
             {
-                string defaultDir = config.DefaultDirectory.Path;
-                destFolder = !Directory.Exists(defaultDir) ? Directory.CreateDirectory(defaultDir).FullName : defaultDir;
-            }
-            else
-            {
+                if (String.IsNullOrEmpty(destFolder))
+                {
+                    throw new ArgumentNullException();
+                }
                 destFolder = !Directory.Exists(destFolder) ? Directory.CreateDirectory(destFolder).FullName : destFolder;
-            }
-            string destFileName = Path.Combine(destFolder, file.Name);
-            if (File.Exists(file.FullName))
-            {
+                string destFileName = Path.Combine(destFolder, file.Name);
                 if (File.Exists(file.FullName))
                 {
-                    file.MoveTo(destFileName, true);
+                    try
+                    {
+                        if (File.Exists(file.FullName))
+                        {
+                            file.MoveTo(destFileName, true);
+                            NotifyService.OnFileMoved(sourceFileName, file.FullName);
+                        }
+                    }
+                    catch (UnauthorizedAccessException ex)
+                    {
+                        NotifyService.OnError(ex.Message);
+                    }
+
                 }
             }
-            NotifyService.OnFileMoved(sourceFileName, file.FullName);
+            catch (ArgumentNullException ex)
+            {
+                NotifyService.OnError(ex.Message);
+            }
+            catch(IOException ex)
+            {
+                NotifyService.OnError(ex.Message);
+            }
+
         }
 
         private void Rename(ref FileInfo file, RuleElement rule)
         {
             string oldFileName = $"{Path.GetFileNameWithoutExtension(file.Name)}";
             string destFileName = file.FullName;
-            string sourceFileName =new string(file.FullName);
+            string sourceFileName = new string(file.FullName);
             if (rule.ShoudAddMoveDate)
             {
                 string date = DateTime.Now.ToShortDateString();
@@ -116,16 +137,24 @@ namespace BclFileWatcherConsole.Impl.Listeners
                     oldFileName = $"{Path.GetFileNameWithoutExtension(destFileName)}";
                     newFileName = $"{oldFileName}_{++_counter}{file.Extension}";
                     destFileName = Path.Combine(Path.GetDirectoryName(file.FullName), newFileName);
-                }                
-            }            
+                }
+            }
             if (destFileName != sourceFileName)
             {
-                if (File.Exists(sourceFileName))
+                try
                 {
-                    File.Move(sourceFileName, destFileName, true);
+                    if (File.Exists(sourceFileName))
+                    {
+                        File.Move(sourceFileName, destFileName, true);
+                        file = new FileInfo(destFileName);
+                        NotifyService.OnFileRenamed(new RenamedEventArgs(WatcherChangeTypes.Renamed, Path.GetDirectoryName(destFileName), Path.GetFileName(destFileName), Path.GetFileName(sourceFileName)));
+                    }
                 }
-            }            
-            NotifyService.OnFileRenamed(new RenamedEventArgs(WatcherChangeTypes.Renamed, Path.GetDirectoryName(destFileName), Path.GetFileName(destFileName), Path.GetFileName(sourceFileName)));
+                catch (FileNotFoundException ex)
+                {
+                    NotifyService.OnError(ex.Message);
+                }
+            }
         }
     }
 }

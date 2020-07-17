@@ -23,15 +23,21 @@ namespace BclFileWatcherConsole.Helpers
         }
         public static void OnFileDeleted(FileSystemEventArgs file)
         {
-            _logger.Information($"{Path.GetDirectoryName(file.FullPath)}: {messages.File}: {file.Name} {messages.deleted}");
+            _logger.Information($"{Path.GetDirectoryName(file?.FullPath)}: {messages.File}: {file?.Name} {messages.deleted}");
         }
+
+        internal static void OnError(string message)
+        {
+            _logger.Information(message);
+        }
+
         public static void OnFileCreated(FileSystemEventArgs file)
         {
             _logger.Information($"{Path.GetDirectoryName(file.FullPath)}: {messages.File}: {file.Name} {messages.created}");
         }
         public static void OnFileChanged(FileSystemEventArgs file)
         {
-            _logger.Information($"{Path.GetDirectoryName(file.FullPath)}: {messages.File}: {file.Name} {messages.changed}");
+            _logger.Information($"{Path.GetDirectoryName(file?.FullPath)}: {messages.File}: {file?.Name} {messages.changed}");
         }
         public static void OnFileRenamed(RenamedEventArgs file)
         {           

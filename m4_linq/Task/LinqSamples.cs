@@ -50,7 +50,7 @@ namespace SampleQueries
         }
 
         [Category("Projection Operators")]
-        [Title("Select, Where - Task002")]
+        [Title("SelectMany, Where - Task002")]
         [Description("This sample return all suppliers for each costomers whose stay in the same Country and City")]
 
         public void Linq02()

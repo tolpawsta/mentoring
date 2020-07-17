@@ -1,4 +1,5 @@
-﻿using BclFileWatcherConsole.Configuration;
+﻿using BclConsoleDemo;
+using BclFileWatcherConsole.Configuration;
 using BclFileWatcherConsole.Configuration.WatchDirectories;
 using BclFileWatcherConsole.Helpers;
 using BclFileWatcherConsole.Impl;
@@ -8,9 +9,11 @@ using BclFileWatcherConsole.Interfaces;
 using System;
 using System.Configuration;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Threading;
+using System.Threading.Tasks;
 using messages = BclFileWatcherConsole.Resources.Messages;
 namespace BclFileWatcherConsole
 {
@@ -40,25 +43,27 @@ namespace BclFileWatcherConsole
                 throw new NullReferenceException($"{messages.Section_in_config__do_not_exists}: {nameConfigSection}");
             }
             var config = AppConfigManager.GetConfiguration(nameConfigSection);
-            config.Validate();
             //TODO: handle exeptions
             var cultureHelper = CultureHelper.Source;
             cultureHelper.SetCurrentCulture(config);
-            var watcheHandler = new WatcherHandler(config);
+            var folders = Directory.GetDirectories(@"d:\exampleNew");
+            var watcherHandler = new WatcherHandler(config);
+            var multiWatcherHandler = new MultiWatcherHandler(config);
             var watchDirectories = WatcherHelper.GetDirectoriesPath(config.WatchDirectories);
-            var watcher = new MultiFileWatcher(new WatcherManager(), watchDirectories);
-            var logger = new WatcherListener();
-
-            logger.Subscribe(watcher);
-            watcheHandler.Subscribe(watcher);
-            watcher.StartWatch();
-
+            var multiWatcher = new MultiFileWatcher(new WatcherManager(), folders);
+            var listener = new WatcherListener();
+            
+            listener.Subscribe(multiWatcher);
+            watcherHandler.Subscribe(multiWatcher);           
+           
+            multiWatcher.StartWatch();
+            
             var isContinue = true;
             Console.CancelKeyPress += (s, e) =>
             {
                 e.Cancel = true;
                 isContinue = false;
-                watcher.StopWatch();
+                multiWatcher.StopWatch();
             };
             while (isContinue)
             {

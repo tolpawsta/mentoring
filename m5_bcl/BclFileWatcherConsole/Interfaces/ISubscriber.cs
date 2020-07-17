@@ -7,5 +7,6 @@ namespace BclFileWatcherConsole.Interfaces
     public interface ISubscriber
     {
         void Subscribe(IMultiWatcher multiWatcher);
+        void Subscribe(IWatcher watcher);
     }
 }

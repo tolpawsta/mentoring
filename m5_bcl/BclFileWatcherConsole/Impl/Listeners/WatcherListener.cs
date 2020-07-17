@@ -11,16 +11,20 @@ namespace BclFileWatcherConsole.Impl.Listeners
         {
             foreach (var watcher in multiWatcher?.Watchers)
             {
-                watcher.FileSystemEvent += FileSystemEventHandle;
-                watcher.RenamedEvent += RenamedEventHandler;
-                watcher.ErrorEvent += ErrorEventHandler;
-                watcher.StartWatchEvent += Watcher_StartWatchEvent;
-                watcher.StopWatchEvent += Watcher_StopWatchEvent;
+                Subscribe(watcher);
             }
         }
+        public void Subscribe(IWatcher watcher)
+        {
+            watcher.FileSystemEvent += FileSystemEventHandle;
+            watcher.RenamedEvent += RenamedEventHandler;
+            watcher.ErrorEvent += ErrorEventHandler;
+            watcher.StartWatchEvent += Watcher_StartWatchEvent;
+            watcher.StopWatchEvent += Watcher_StopWatchEvent;
+        }        
         public void ErrorEventHandler(object s, ErrorEventArgs e)
         {
-            throw new NotImplementedException();
+            NotifyService.OnError(e.GetException().Message);
         }
         private void Watcher_StopWatchEvent(object sender, FileSystemInfo e)
         {
@@ -51,5 +55,7 @@ namespace BclFileWatcherConsole.Impl.Listeners
                 NotifyService.OnFileChanged(e);
             }
         }
+
+        
     }
 }
