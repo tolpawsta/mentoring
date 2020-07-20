@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 using Reflection.DIContainer.Attributes;
+using Reflection.DIContainer.Helper;
 
 namespace Reflection.DIContainer
 {
@@ -28,15 +29,13 @@ namespace Reflection.DIContainer
 
         public void AddType(Type typeImpl, Type typeAbstract = null)
         {
-            var hasTypeCustomAttributes = typeImpl.CustomAttributes.Any(a => a.AttributeType == typeof(ExportAttribute)
-                                                                                     || a.AttributeType == typeof(ImportConstructorAttribute));
-            var hasTypePropsWithCustomAttr = typeImpl.GetProperties()
-                .Any(p => p.CustomAttributes
-                    .Any(a => a.AttributeType == typeof(ImportAttribute)));
-            
-            if (!hasTypePropsWithCustomAttr || !hasTypeCustomAttributes)
+            if (!_types.ContainsValue(typeImpl))
             {
-                throw new TypeLoadException("Additional type doesn't contains any of needed attribute");
+
+                if (!DiContainerHelper.HasTypeCustomAttributes(typeImpl))
+                {
+                    throw new TypeLoadException("Additional type doesn't contains any of needed attribute");
+                }
             }
             if (typeAbstract == null)
             {
@@ -61,8 +60,37 @@ namespace Reflection.DIContainer
 
         private object Resolve(Type type)
         {
-            var attributes = type.Attributes;
+            if (type.IsAbstract || type.IsInterface)
+            {
+                throw new TypeLoadException("type is abstract or interface");
+            }
+
+            if (type.CustomAttributes.Any(a => a.AttributeType == typeof(ImportConstructorAttribute)))
+            {
+                var typeCtors = type.GetConstructors(BindingFlags.CreateInstance | BindingFlags.Public);
+                var typeCtorToDi = typeCtors.FirstOrDefault(c => c.GetParameters().Length > 0);
+                if (typeCtorToDi != null)
+                {
+                    var dependencies = typeCtorToDi.GetParameters().Select(p => p.HasDefaultValue ? p.DefaultValue : CreateInstance(p.GetType())).ToArray();
+                    typeCtorToDi.Invoke(dependencies);
+                }
+            }
+            else
+            {
+                var properties = type.GetProperties(BindingFlags.Public | BindingFlags.SetProperty)
+                    .Where(p => p.CustomAttributes.Any(a => a.AttributeType == typeof(ImportAttribute)));
+                foreach (var property in properties)
+                {
+                    property.SetValue(type,CreateInstance(property.GetType()));
+                }
+            }
+
+            return Activator.CreateInstance(type);
         }
-        private
+
+        private object[] GetDependencies(IEnumerable<Type> types)
+        {
+            return types.Select(t => CreateInstance(t)).ToArray();
+        }
     }
 }
