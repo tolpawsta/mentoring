@@ -2,7 +2,7 @@
 
 namespace Reflection.DIContainer.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class|AttributeTargets.Interface,AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class,AllowMultiple = true)]
     public class ExportAttribute:Attribute
     {
         public Type InheretedType { get; }

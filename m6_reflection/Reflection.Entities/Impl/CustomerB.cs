@@ -9,6 +9,10 @@ namespace Reflection.Entities.Impl
         public ICustomer Customer { get; set; }
         [Import]
         public Logger AppLogger { get; set; }
+       public void Run()
+        {
+            AppLogger.InfoToConsole("Customerb :");
+            AppLogger.InfoToConsole(Customer.Buy("buy technik"));
+        }
     }
-}
 }
