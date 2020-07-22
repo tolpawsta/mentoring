@@ -6,6 +6,7 @@ using System.Linq;
 using Reflection.DIContainer.Attributes;
 using Reflection.DIContainer.Exceptions;
 using Reflection.DIContainer.Helper;
+using Reflection.DIContainer.Interfaces;
 
 namespace Reflection.DIContainer
 {
@@ -13,9 +14,11 @@ namespace Reflection.DIContainer
     {
         private Assembly _assembly;
         private Dictionary<Type, Type> _types;
+        private IMessageWriter _writer;
 
-        public DiContainer()
+        public DiContainer(IMessageWriter writer=null)
         {
+            _writer = writer;
             _types = new Dictionary<Type, Type>();
         }
 
@@ -27,7 +30,6 @@ namespace Reflection.DIContainer
             {
                 throw new ArgumentNullException(nameof(assembly));
             }
-
             _assembly = assembly;
             var types = DiContainerHelper.GetAssemblies(assembly).SelectMany(am => DiContainerHelper.GetTypes(am)
                     .Where(t => t.CustomAttributes.Any(a => a.AttributeType == typeof(ImportConstructorAttribute) || a.AttributeType == typeof(ExportAttribute))
@@ -43,15 +45,15 @@ namespace Reflection.DIContainer
             }
             if (typeImpl.CustomAttributes.Any(a => a.AttributeType == typeof(ImportAttribute)) && typeImpl.GetConstructors().Any(c => c.GetParameters().Length > 0))
             {
-                throw new DiException($"Error. Additional type has {nameof(ImportAttribute)} but contain constructor with parameters", typeImpl);
+                throw new DiException($"Error. Additional type has {nameof(ImportAttribute)} but contain constructor with parameters");
             }
             if (!DiContainerHelper.HasTypeCustomAttributes(typeImpl))
             {
-                Console.WriteLine($"Additional type {typeImpl.Name} doesn't contains any of needed attributes");
+                _writer?.WriteLine($"Additional type {typeImpl.Name} doesn't contains any of needed attributes");
             }
             if (typeAbstract!=null && typeImpl.GetInterface(typeAbstract.FullName) == null)
             {
-                Console.WriteLine($"Additional type {typeImpl.Name} don't implement {typeAbstract.Name} interface");
+                throw new DiException($"Additional type {typeImpl.Name} don't implement {typeAbstract.Name} interface");
             }
             if (typeAbstract == null)
             {
@@ -59,7 +61,7 @@ namespace Reflection.DIContainer
             }
             if (!_types.TryAdd(typeAbstract, typeImpl))
             {
-                Console.WriteLine($"Additional types {typeAbstract.Name} - {typeImpl.Name} are already exists");
+                _writer?.WriteLine($"Additional types {typeAbstract.Name} - {typeImpl.Name} are already exists");
             }
         }
         public object CreateInstance(Type type)

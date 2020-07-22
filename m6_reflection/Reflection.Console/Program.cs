@@ -13,7 +13,8 @@ namespace Reflection.Console
     {
         static void Main(string[] args)
         {
-            var container = new DiContainer();
+            var writer=new ConsoleMessageWriter();
+            var container = new DiContainer(writer);
             container.AddAssembly(Assembly.GetExecutingAssembly());
             WriteLine($"Assemblies:");
             foreach (var assembly in container.Assemblies)
