@@ -12,4 +12,6 @@
 
 :white_check_mark: Module 5 BCL
 
-:black_square_button:: Module 6 Reflection
+:white_check_mark: Module 6 Reflection
+
+:black_square_button: Module 7 Basic XML
