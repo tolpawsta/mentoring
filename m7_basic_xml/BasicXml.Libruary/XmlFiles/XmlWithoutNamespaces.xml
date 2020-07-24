@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<publications  date="02/12/2020" name_libruary="">
+	<book>
+		<title>CLR Via C#</title>
+		<authors>
+			<author>Jeffrey Richter</author>
+		</authors>
+		<publisher>Wintellec</publisher>
+		<year>2012</year>
+		<pages>1000</pages>
+		<isbn>978-0735667457</isbn>
+		<note></note>
+	</book>
+	<newspaper>
+		<title>Mynewspaper</title>
+		<city>Grodno</city>
+		<publisher>Dialectika</publisher>
+		<year>2020</year>
+		<pages>20</pages>
+		<number>38</number>
+		<issn>978-0735667457</issn>
+		<note></note>
+	</newspaper>
+	<patent>
+		<title>patent</title>
+		<inventors>
+			<author>Ivan Ivanov</author>
+		</inventors>
+		<country>Grodno</country>
+		<number>38</number>
+		<dateofapplication>22/07/2020</dateofapplication>
+		<dateofpublication>23/07/2020</dateofpublication>
+		<pages>20</pages>
+		<note></note>
+	</patent>
+</publications>

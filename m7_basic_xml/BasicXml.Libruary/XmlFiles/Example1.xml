@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<?xml-stylesheet type="text/xsl" href="publish.xsl"?>
+<publications  date="02/12/2020" name_libruary=""
+               xmlns:b="http://myschema/xls/book"
+			   xmlns:n="http://myschema/xls/newspaper"
+               xmlns:p="http://myschema/xls/patent"
+               xmlns="http://myschema/xls/publications">
+	<b:publication>
+		<b:title>CLR Via C#</b:title>
+		<b:authors>
+			<b:author>Jeffrey Richter</b:author>
+		</b:authors>
+		<b:publisher>Wintellec</b:publisher>
+		<b:year>2012</b:year>
+		<b:pages>1000</b:pages>
+		<b:isbn>978-0735667457</b:isbn>
+		<b:note></b:note>
+	</b:publication>
+	<n:publication>
+		<n:title>Mynewspaper</n:title>
+		<n:city>Grodno</n:city>
+		<n:publisher>Dialectika</n:publisher>
+		<n:year>2020</n:year>
+		<n:pages>20</n:pages>
+		<n:number>38</n:number>
+		<n:issn>978-0735667457</n:issn>
+		<n:note></n:note>
+	</n:publication>
+	<p:publication>
+		<p:title>patent</p:title>
+		<p:inventors>
+			<p:author>Ivan Ivanov</p:author>
+		</p:inventors>
+		<p:country>Grodno</p:country>
+		<p:number>38</p:number>
+		<p:dateofapplication>22/07/2020</p:dateofapplication>
+		<p:dateofpublication>23/07/2020</p:dateofpublication>
+		<p:pages>20</p:pages>
+		<p:note></p:note>
+	</p:publication>
+</publications>
