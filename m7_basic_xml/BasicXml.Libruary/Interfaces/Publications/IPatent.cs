@@ -6,8 +6,9 @@ namespace BasicXml.Libruary.Interfaces.Publications
     public interface IPatent
     {
         List<string> Inventors { get; set; }
-        string RegistrationNummber { get; set;}
+        string RegistrationNumber { get; set;}
         DateTime DateOfApplication { get; set;}
         DateTime DateOfPublication { get; set; }
+        string Country { get; set; }
     }
 }

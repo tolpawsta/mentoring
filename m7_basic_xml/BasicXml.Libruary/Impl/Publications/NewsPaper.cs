@@ -7,5 +7,6 @@ namespace BasicXml.Libruary.Impl.Publications
     {
         public string ISSN { get; set; }
         public DateTime DateOfPublication { get; set; }
+        public uint Number { get; set; }
     }
 }

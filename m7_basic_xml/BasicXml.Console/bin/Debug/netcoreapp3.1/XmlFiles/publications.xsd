@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.basicxml.com/publication"
+           xmlns:p="http://www.basicxml.com/publication"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="1.0">
+	<xs:element name="publications">
+		<xs:complexType mixed="true">
+			<xs:sequence minOccurs="0" maxOccurs="unbounded" >
+				<xs:element name="book" minOccurs="0" maxOccurs="unbounded" type="p:Book"/>
+				<xs:element name="newspaper" minOccurs="0" maxOccurs="unbounded" type="p:NewsPaper"/>
+				<xs:element name="patent" minOccurs="0" maxOccurs="unbounded" type="p:Patent"/>
+			</xs:sequence>
+			<xs:attribute name="publishDate" type="xs:date" use="required"/>
+			<xs:attribute name="nameLibruary" type="xs:string" use="required"/>
+			<xs:attribute name="xmlns0x3Ap" type="xs:anyURI"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="Book">
+		<xs:sequence>
+			<xs:element name="title" type="p:Title"/>
+			<xs:element name="authors">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="author" minOccurs="1" maxOccurs="unbounded" type="p:Title"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name ="city" minOccurs="0" type="p:City"/>
+			<xs:element  name="publisher" type="p:City"/>
+			<xs:element name="year" type ="xs:unsignedShort"/>
+			<xs:element name="pages" type="xs:unsignedShort"/>
+			<xs:element name="isbn" type="xs:string"/>
+			<xs:element name="note" minOccurs="0" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NewsPaper">
+		<xs:sequence>
+			<xs:element name="title" type="p:Title"/>
+			<xs:element name ="city" type="p:City"/>
+			<xs:element  name="publisher" type="p:City"/>
+			<xs:element name="year" type ="xs:unsignedShort"/>
+			<xs:element name="pages" type="xs:unsignedShort"/>
+			<xs:element name="number" type="xs:unsignedShort"/>
+			<xs:element name="publishDate" type="xs:date"/>
+			<xs:element name="issn" type="xs:string"/>
+			<xs:element name="note" minOccurs="0" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Patent">
+		<xs:sequence>
+			<xs:element name="title" type="p:Title"/>
+			<xs:element name="inventors">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="inventor" minOccurs="1" maxOccurs="unbounded" type="p:Title"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name ="country" type="p:City"/>
+			<xs:element name="registrNumber" type="xs:string"/>
+			<xs:element name="applicationDate" type="xs:date"/>
+			<xs:element name="publicationDate" type="xs:date"/>
+			<xs:element name="pages" type="xs:unsignedShort"/>
+			<xs:element name="note" minOccurs="0" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Title">
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace fixed="true" value="preserve"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="City">
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace fixed="true" value="preserve"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

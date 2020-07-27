@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Xml;
 using System.Xml.Schema;
 using BasicXml.Libruary.Impl.Publications;
@@ -13,35 +14,22 @@ namespace BasicXml.Libruary.Impl
     public class BasicXmlReader : IXmlReader
     {
         private XmlReader _reader;
-        private IXmlDocument _document;
+        public DateTime DateOfPublish { get; private set; }
+        public string NameLibruary { get; private set; }
         public string PathToXsdFile { get; set; }
+        private IXmlParser _parser;
 
-        public BasicXmlReader()
+        public BasicXmlReader(IXmlParser parser)
         {
-
+            _parser = parser;
         }
-
-        public IXmlDocument Read(Stream stream)
+        public IEnumerable<Publication> Read(StreamReader stream)
         {
-            using (var streamReader = new StreamReader(stream))
-            {
-                return Read(streamReader);
-            }
-        }
-
-        public IXmlDocument Read(string pathFile)
-        {
-            var stream = new FileStream(pathFile, FileMode.Open);
-            return Read(stream);
-        }
-
-        private IXmlDocument Read(StreamReader stream)
-        {
-            _document = new BasicXmlDocument();
             XmlReaderSettings settings = null;
             try
             {
                 settings = XmlReaderService.GetSettings(PathToXsdFile);
+                settings.ValidationEventHandler += ValidationEventHandle;
             }
             catch (FileNotFoundException e)
             {
@@ -73,61 +61,29 @@ namespace BasicXml.Libruary.Impl
                 }
                 else
                 {
-                    _document.DateOfPublish = DateTime.Parse(_reader.GetAttribute("publishDate"));
-                    _document.NameLibruary = _reader.GetAttribute("nameLibruary");
+                    DateOfPublish = DateTime.Parse(_reader.GetAttribute("publishDate"));
+                    NameLibruary = _reader.GetAttribute("nameLibruary");
+                    _reader.GetAttribute("xmlns:p");
                 }
-                var publications = new List<Publication>();
                 _reader.MoveToElement();
-                while (_reader.ReadToNextSibling("book") || _reader.ReadToNextSibling("newspaper") ||
-                       _reader.ReadToNextSibling("patent"))
+                if (settings==null)
                 {
-                    if (_reader.Name == "book")
-                    {
-                        var book = new Book();
-                        _reader.ReadToDescendant("title");
-                        book.Title = _reader.ReadElementContentAsString();
-                        _reader.ReadToFollowing("authors");
-                        _reader.ReadToDescendant("author");
-                        do
-                        {
-
-                            book.Authors = new List<string>();
-                            var author = _reader.ReadElementContentAsString();
-                            if (author != null)
-                            {
-                                book.Authors.Add(author);
-                            }
-                        } while (_reader.ReadToNextSibling("author"));
-
-                        _reader.ReadToFollowing("city");
-                        book.City = _reader.ReadElementContentAsString();
-                        publications.Add(book);
-                    }
-                    else if (_reader.Name == "newspaper")
-                    {
-
-                    }
-                    else if (_reader.Name == "patent")
-                    {
-
-                    }
-                    else
-                    {
-
-                    }
-
-                    Console.WriteLine($"Element {_reader.Name} value {_reader.ReadContentAsString()}");
+                    _reader.Read();
                 }
-                _document.Puplications = publications;
+                while(_reader.Read()&&_reader.NodeType!=XmlNodeType.EndElement)
+                {
+                    yield return _parser.GetPublication(_reader);
+                    _reader.MoveToContent();
+                    _reader.Read();
+                } 
                 Console.WriteLine("Validate Successfull");
 
             }
             finally
             {
+                stream?.Close();
                 _reader?.Close();
             }
-
-            return _document;
         }
 
         private void ValidationEventHandle(object sender, ValidationEventArgs e)

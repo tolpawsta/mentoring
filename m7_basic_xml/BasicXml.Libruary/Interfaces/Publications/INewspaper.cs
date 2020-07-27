@@ -6,5 +6,6 @@ namespace BasicXml.Libruary.Interfaces.Publications
     {
         string ISSN { get; set; }
         DateTime DateOfPublication { get; set; }
+        uint Number { get; set; }
     }
 }

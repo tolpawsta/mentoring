@@ -7,8 +7,7 @@ namespace BasicXml.Libruary.Interfaces
 {
     public interface ILibruary
     {
-        IXmlDocument Read(Stream stream);
-        IXmlDocument Read(string pathFile);
+        IEnumerable<Publication> Read(StreamReader stream);
         void Write(IEnumerable<Publication> publications, string targetDocPath);
         void Write(IEnumerable<Publication> publications, Stream stream);
     }

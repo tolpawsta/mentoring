@@ -17,30 +17,7 @@ namespace BasicXml.Libruary.Impl
             _reader = reader;
             _writer = writer;
         }
-        public IXmlDocument Read(Stream stream)
-        {
-            if (stream == null)
-            {
-                throw new ArgumentNullException("Stream is null");
-            }
-
-            if (!stream.CanRead)
-            {
-                throw new ArgumentException("Stream can not read");
-            }
-            return _reader.Read(stream);
-        }
-
-        public IXmlDocument Read(string pathFile)
-        {
-            if (!File.Exists(pathFile))
-            {
-                throw new FileNotFoundException();
-            }
-
-            return _reader.Read(pathFile);
-        }
-
+        public IEnumerable<Publication> Read(StreamReader stream) => _reader.Read(stream);
         public void Write(IEnumerable<Publication> publications, string targetDocPath)
         {
             if (publications == null)

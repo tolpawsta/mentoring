@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using BasicXml.Libruary.Interfaces.Publications;
 
@@ -6,8 +7,9 @@ namespace BasicXml.Libruary.Interfaces
 {
     public interface IXmlReader
     {
-        IXmlDocument Read(Stream stream);
-        IXmlDocument Read(string pathFile);
+        IEnumerable<Publication> Read(StreamReader stream);
+        DateTime DateOfPublish { get;}
+        string NameLibruary { get; }
         string PathToXsdFile { get; set; }
     }
 }
