@@ -14,4 +14,6 @@
 
 :white_check_mark: Module 6 Reflection
 
-:black_square_button: Module 7 Basic XML
+:white_check_mark: Module 7 Basic XML
+
+:black_square_button: Module 8 Basic SQL
