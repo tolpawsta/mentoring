@@ -4,7 +4,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Xml;
 using System.Xml.Schema;
 
-namespace BasicXml.Libruary.Servises
+namespace BasicXml.Library.Servises
 {
     public static class XmlReaderService
     {

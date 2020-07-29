@@ -1,35 +1,32 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
 
-namespace BasicXml.Libruary.Servises
+namespace BasicXml.Library.Servises
 {
     public static class XmlParserService
     {
-        public static string GetStringValue(this XmlReader reader, string nameElement)
+        public static string GetStringValue(this XElement element, string nameElement)
         {
-            reader.ReadToFollowing(nameElement);
-            return reader.ReadElementContentAsString();
+            
+            return element.Descendants().FirstOrDefault(e=>e.Name.LocalName.Equals(nameElement)).Value;
         }
 
-        public static DateTime GetDate(this XmlReader reader, string nameElement)
+        public static List<string> GetListSubElements(this XElement element, string nameSumElement)
         {
-            reader.ReadToFollowing(nameElement);
-            return reader.ReadElementContentAsDateTime();
+            return element.Descendants()?.Where(e => e.Name.LocalName.Equals(nameSumElement)).Select(e => e.Value).ToList();
+        }
+        public static DateTime GetDate(this XElement element, string nameElement)
+        {
+            
+            return DateTime.Parse(element.GetStringValue(nameElement));
         }
 
-        public static uint GetUint(this XmlReader reader, string nameElement)
+        public static int GetInt(this XElement element, string nameElement)
         {
-            reader.ReadToFollowing(nameElement);
-            uint itemValue = 1;
-            try
-            {
-                uint.TryParse(reader.ReadElementContentAsString(), out itemValue);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message, e.StackTrace);
-            }
-            return itemValue;
+            return int.Parse(element.GetStringValue(nameElement));
         }
     }
 }

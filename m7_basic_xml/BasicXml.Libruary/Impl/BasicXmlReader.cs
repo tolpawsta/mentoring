@@ -1,94 +1,49 @@
-﻿using BasicXml.Libruary.Interfaces;
+﻿using BasicXml.Library.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Xml;
-using System.Xml.Schema;
-using BasicXml.Libruary.Impl.Publications;
-using BasicXml.Libruary.Interfaces.Publications;
-using BasicXml.Libruary.Servises;
+using System.Xml.Linq;
 
-namespace BasicXml.Libruary.Impl
+namespace BasicXml.Library.Impl
 {
     public class BasicXmlReader : IXmlReader
     {
         private XmlReader _reader;
         public DateTime DateOfPublish { get; private set; }
-        public string NameLibruary { get; private set; }
-        public string PathToXsdFile { get; set; }
-        private IXmlParser _parser;
-
-        public BasicXmlReader(IXmlParser parser)
+        public XElement GetRootElement(string pathToXmlFile)
         {
-            _parser = parser;
+            using (var reader = XmlReader.Create(pathToXmlFile))
+            {
+                reader.MoveToContent();
+                return (XElement) XNode.ReadFrom(reader);
+            }
         }
-        public IEnumerable<Publication> Read(StreamReader stream)
+
+        public IEnumerable<XElement> Read(string pathToXmlFile)
         {
-            XmlReaderSettings settings = null;
+            if (!File.Exists(pathToXmlFile))
+            {
+                throw new FileNotFoundException();
+            }
             try
             {
-                settings = XmlReaderService.GetSettings(PathToXsdFile);
-                settings.ValidationEventHandler += ValidationEventHandle;
-            }
-            catch (FileNotFoundException e)
-            {
-                Console.WriteLine(e.Message, e.StackTrace);
-            }
-            catch (FileLoadException e)
-            {
-                Console.WriteLine(e.Message, e.StackTrace);
-            }
-            catch (XmlSchemaException e)
-            {
-                Console.WriteLine(e.Message, e.StackTrace);
-            }
-
-            try
-            {
-                if (settings != null)
+                var settings = new XmlReaderSettings()
                 {
-                    _reader = XmlReader.Create(stream, settings);
-                }
-                else
-                {
-                    _reader = XmlReader.Create(stream);
-                }
+                    IgnoreWhitespace = true
+                };
+                _reader = XmlReader.Create(pathToXmlFile, settings);
                 _reader.MoveToContent();
-                if (!_reader.HasAttributes)
+                _reader.Read();
+                do
                 {
-                    Console.WriteLine($"start element hasn't attributes");
-                }
-                else
-                {
-                    DateOfPublish = DateTime.Parse(_reader.GetAttribute("publishDate"));
-                    NameLibruary = _reader.GetAttribute("nameLibruary");
-                    _reader.GetAttribute("xmlns:p");
-                }
-                _reader.MoveToElement();
-                if (settings==null)
-                {
-                    _reader.Read();
-                }
-                while(_reader.Read()&&_reader.NodeType!=XmlNodeType.EndElement)
-                {
-                    yield return _parser.GetPublication(_reader);
-                    _reader.MoveToContent();
-                    _reader.Read();
-                } 
-                Console.WriteLine("Validate Successfull");
-
+                    yield return XNode.ReadFrom(_reader) as XElement;
+                } while (_reader.NodeType != XmlNodeType.EndElement);
             }
             finally
             {
-                stream?.Close();
                 _reader?.Close();
             }
-        }
-
-        private void ValidationEventHandle(object sender, ValidationEventArgs e)
-        {
-            Console.WriteLine($"Validation error: {e.Message}: {e.Exception.LinePosition} ");
         }
     }
 }

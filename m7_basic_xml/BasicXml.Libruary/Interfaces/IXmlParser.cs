@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Xml;
-using BasicXml.Libruary.Interfaces.Publications;
+﻿using BasicXml.Library.Interfaces.Publications;
+using System.Xml.Linq;
 
-namespace BasicXml.Libruary.Interfaces
+namespace BasicXml.Library.Interfaces
 {
     public interface IXmlParser
     {
-        Publication GetPublication(XmlReader reader);
+        Publication ParseToPublication(XElement node);
+        string GetPublishDate(XElement rootElement);
+        string GetLibraryName(XElement rootElement);
+        bool WasParseSuccessful { get; }
     }
 }

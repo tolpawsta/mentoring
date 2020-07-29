@@ -10,7 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BasicXml.Libruary\BasicXml.Libruary.csproj" />
+    <PackageReference Include="Autofac" Version="5.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BasicXml.Libruary\BasicXml.Library.csproj" />
   </ItemGroup>
 
 </Project>

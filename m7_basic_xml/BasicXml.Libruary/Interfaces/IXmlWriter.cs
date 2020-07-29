@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using BasicXml.Libruary.Interfaces.Publications;
+using BasicXml.Library.Interfaces.Publications;
 
-namespace BasicXml.Libruary.Interfaces
+namespace BasicXml.Library.Interfaces
 {
     public interface IXmlWriter
     {
         void Write(IEnumerable<Publication> publications, string targetDocPath);
-        void Write(IEnumerable<Publication> publications, Stream targetDocPath);
+        public string LibraryName { get; set; }
     }
 }

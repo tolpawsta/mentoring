@@ -1,77 +1,133 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using BasicXml.Library.Impl.Publications;
+using BasicXml.Library.Interfaces;
+using BasicXml.Library.Interfaces.Publications;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Xml;
 using System.Xml.Linq;
-using BasicXml.Libruary.Impl.Publications;
-using BasicXml.Libruary.Interfaces;
-using BasicXml.Libruary.Interfaces.Publications;
-using BasicXml.Libruary.Servises;
+using BasicXml.Library.Servises;
 
-namespace BasicXml.Libruary.Impl
+namespace BasicXml.Library.Impl
 {
     public class BasicXmlParser : IXmlParser
     {
-        public Publication GetPublication(XmlReader reader)
+       public bool WasParseSuccessful { get; private set; }
+
+        public Publication ParseToPublication(XElement element)
         {
-            switch (reader.Name)
+            WasParseSuccessful = true;
+            Publication publication = null;
+            try
             {
-                case "book":
-                    {
-                        var book = new Book();
-                        book.Title = reader.GetStringValue("title");
-                        reader.ReadToFollowing("authors");
-                        var element = XNode.ReadFrom(reader) as XElement;
-                        if (element.HasElements)
-                        {
-                            book.Authors = new List<string>();
-                            element.Descendants("author").ToList().ForEach(e => book.Authors.Add(e.Value));
-                        }
-                        book.City = reader.GetStringValue("city");
-                        book.Publisher = reader.GetStringValue("publisher");
-                        book.Year = reader.GetUint("year");
-                        book.NumberOfPages = reader.GetUint("pages");
-                        book.ISBN = reader.GetStringValue("isbn");
-                        book.Note = reader.GetStringValue("note");
-                        return book;
-                    };
-                case "newspaper":
-                    {
-                        var newsPaper = new NewsPaper();
-                        //reader.ReadToDescendant("title");
-                        newsPaper.Title = reader.GetStringValue("title");
-                        newsPaper.City = reader.GetStringValue("city"); 
-                        newsPaper.Publisher = reader.GetStringValue("publisher");
-                        newsPaper.Year = reader.GetUint("year");
-                        newsPaper.NumberOfPages = reader.GetUint("pages");
-                        newsPaper.Number = reader.GetUint("number");
-                        newsPaper.DateOfPublication = reader.GetDate("publishDate");
-                        newsPaper.ISSN = reader.GetStringValue("issn");
-                        newsPaper.Note = reader.GetStringValue("note");
-                        return newsPaper;
-                    };
-                case "patent":
-                    {
-                        var patent = new Patent();
-                        patent.Title = reader.GetStringValue("title");
-                        reader.ReadToFollowing("inventors");
-                        var element = XNode.ReadFrom(reader) as XElement;
-                        if (element.HasElements)
-                        {
-                            patent.Inventors = new List<string>();
-                            element.Descendants("inventor").ToList().ForEach(e => patent.Inventors.Add(e.Value));
-                        }
-                        patent.Country = reader.GetStringValue("country");
-                        patent.RegistrationNumber = reader.GetStringValue("registrNumber");
-                        patent.DateOfApplication = reader.GetDate("applicationDate");
-                        patent.DateOfPublication = reader.GetDate("publicationDate");
-                        patent.NumberOfPages = reader.GetUint("pages");
-                        patent.Note = reader.GetStringValue("note");
-                        return patent;
-                    };
-                default:
-                    return null;
+                switch (element.Name.LocalName)
+                {
+                    case ConstantsService.PUBLICATION_TYPE_BOOK:
+                        publication = ParseToBook(element);
+                        break;
+                    case ConstantsService.PUBLICATION_TYPE_NEWSPAPER:
+                        publication = ParseToNewsPaper(element);
+                        break;
+                    case ConstantsService.PUBLICATION_TYPE_PATENT:
+                        publication = ParseToPatent(element);
+                        break;
+                    default:
+                        WasParseSuccessful = false;
+                        break;
+                }
             }
+            catch (FormatException e)
+            {
+                Trace.TraceWarning(e.Message, e.StackTrace);
+                WasParseSuccessful = false;
+            }
+            catch (XmlException e)
+            {
+                Trace.TraceWarning(e.Message, e.StackTrace);
+                WasParseSuccessful = false;
+            }
+            catch (NullReferenceException e)
+            {
+                Trace.TraceWarning(e.Message, e.StackTrace);
+                WasParseSuccessful = false;
+            }
+            return publication;
+        }
+
+        private Book ParseToBook(XElement element)
+        {
+            var book = new Book();
+            book.Title = element.GetStringValue(ConstantsService.ELEMENT_NAME_TITLE);
+            book.Authors = element.GetListSubElements(ConstantsService.ELEMENT_NAME_AUTHOR);
+            book.City = element.GetStringValue(ConstantsService.ELEMENT_NAME_CITY);
+            book.Publisher = element.GetStringValue(ConstantsService.ELEMENT_NAME_PUBLISHER);
+            book.Year = int.Parse(element.GetStringValue(ConstantsService.ELEMENT_NAME_YEAR));
+            book.NumberOfPages = int.Parse(element.GetStringValue(ConstantsService.ELEMENT_NAME_PAGES));
+            book.ISBN = element.GetStringValue(ConstantsService.ELEMENT_NAME_ISBN);
+            book.Note = element.GetStringValue(ConstantsService.ELEMENT_NAME_NOTE);
+            if (book.Authors?.Count() == 0 || book.Year <= 0
+                                          || book.NumberOfPages <= 0
+                                          || string.IsNullOrEmpty(book.Title))
+            {
+                WasParseSuccessful = false;
+            }
+            return book;
+        }
+
+        private NewsPaper ParseToNewsPaper(XElement element)
+        {
+            var newsPaper = new NewsPaper();
+            newsPaper.Title = element.GetStringValue(ConstantsService.ELEMENT_NAME_TITLE);
+            newsPaper.City = element.GetStringValue(ConstantsService.ELEMENT_NAME_CITY);
+            newsPaper.Publisher = element.GetStringValue(ConstantsService.ELEMENT_NAME_PUBLISHER);
+            newsPaper.Year = int.Parse(element.GetStringValue(ConstantsService.ELEMENT_NAME_YEAR));
+            newsPaper.NumberOfPages = int.Parse(element.GetStringValue(ConstantsService.ELEMENT_NAME_PAGES));
+            newsPaper.Number = int.Parse(element.GetStringValue(ConstantsService.ELEMENT_NAME_NUMBER));
+            newsPaper.DateOfPublication = element.GetDate(ConstantsService.ELEMENT_NAME_PUBLISH_DATE);
+            newsPaper.ISSN = element.GetStringValue(ConstantsService.ELEMENT_NAME_ISSN);
+            newsPaper.Note = element.GetStringValue(ConstantsService.ELEMENT_NAME_NOTE);
+            if (newsPaper.Year <= 0
+                || newsPaper.NumberOfPages <= 0
+                || newsPaper.Number <= 0
+                || string.IsNullOrEmpty(newsPaper.Title)
+                || newsPaper.DateOfPublication == null)
+            {
+                WasParseSuccessful = false;
+            }
+            return newsPaper;
+        }
+
+        private Patent ParseToPatent(XElement element)
+        {
+            var patent = new Patent();
+            patent.Title = element.GetStringValue(ConstantsService.ELEMENT_NAME_TITLE);
+            patent.Inventors = element.GetListSubElements(ConstantsService.ELEMENT_NAME_INVENTOR);
+            patent.Country = element.GetStringValue(ConstantsService.ELEMENT_NAME_COUNTRY);
+            patent.RegistrationNumber = element.GetStringValue(ConstantsService.ELEMENT_NAME_REGISTRATION_NUMBER);
+            patent.DateOfApplication = element.GetDate(ConstantsService.ELEMENT_NAME_APPLICATION_DATE);
+            patent.DateOfPublication = element.GetDate(ConstantsService.ELEMENT_NAME_PUBLICATION_DATE);
+            patent.NumberOfPages = element.GetInt(ConstantsService.ELEMENT_NAME_PAGES);
+            patent.Note = element.GetStringValue(ConstantsService.ELEMENT_NAME_NOTE);
+            if (string.IsNullOrEmpty(patent.Title)
+                || patent.Inventors?.Count() <= 0
+                || patent.NumberOfPages <= 0
+                || string.IsNullOrEmpty(patent.Title)
+                || patent.DateOfPublication == null
+                || patent.DateOfApplication == null)
+            {
+                WasParseSuccessful = false;
+            }
+            return patent;
+        }
+        public string GetPublishDate(XElement element)
+        {
+            return element.Attribute(ConstantsService.ELEMENT_NAME_PUBLISH_DATE)?.Value;
+        }
+
+        public string GetLibraryName(XElement element)
+        {
+            return element.Attribute(ConstantsService.ATTRIBUTE_NAME_LIBRARY)?.Value;
         }
     }
 }
