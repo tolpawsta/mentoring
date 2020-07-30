@@ -23,13 +23,13 @@ namespace BasicXml.Library.Impl
             {
                 switch (element.Name.LocalName)
                 {
-                    case ConstantsService.PUBLICATION_TYPE_BOOK:
+                    case Constants.PUBLICATION_TYPE_BOOK:
                         publication = ParseToBook(element);
                         break;
-                    case ConstantsService.PUBLICATION_TYPE_NEWSPAPER:
+                    case Constants.PUBLICATION_TYPE_NEWSPAPER:
                         publication = ParseToNewsPaper(element);
                         break;
-                    case ConstantsService.PUBLICATION_TYPE_PATENT:
+                    case Constants.PUBLICATION_TYPE_PATENT:
                         publication = ParseToPatent(element);
                         break;
                     default:
@@ -58,14 +58,14 @@ namespace BasicXml.Library.Impl
         private Book ParseToBook(XElement element)
         {
             var book = new Book();
-            book.Title = element.GetStringValue(ConstantsService.ELEMENT_NAME_TITLE);
-            book.Authors = element.GetListSubElements(ConstantsService.ELEMENT_NAME_AUTHOR);
-            book.City = element.GetStringValue(ConstantsService.ELEMENT_NAME_CITY);
-            book.Publisher = element.GetStringValue(ConstantsService.ELEMENT_NAME_PUBLISHER);
-            book.Year = int.Parse(element.GetStringValue(ConstantsService.ELEMENT_NAME_YEAR));
-            book.NumberOfPages = int.Parse(element.GetStringValue(ConstantsService.ELEMENT_NAME_PAGES));
-            book.ISBN = element.GetStringValue(ConstantsService.ELEMENT_NAME_ISBN);
-            book.Note = element.GetStringValue(ConstantsService.ELEMENT_NAME_NOTE);
+            book.Title = element.GetStringValue(Constants.ELEMENT_NAME_TITLE);
+            book.Authors = element.GetListSubElements(Constants.ELEMENT_NAME_AUTHOR);
+            book.City = element.GetStringValue(Constants.ELEMENT_NAME_CITY);
+            book.Publisher = element.GetStringValue(Constants.ELEMENT_NAME_PUBLISHER);
+            book.Year = int.Parse(element.GetStringValue(Constants.ELEMENT_NAME_YEAR));
+            book.NumberOfPages = int.Parse(element.GetStringValue(Constants.ELEMENT_NAME_PAGES));
+            book.ISBN = element.GetStringValue(Constants.ELEMENT_NAME_ISBN);
+            book.Note = element.GetStringValue(Constants.ELEMENT_NAME_NOTE);
             if (book.Authors?.Count() == 0 || book.Year <= 0
                                           || book.NumberOfPages <= 0
                                           || string.IsNullOrEmpty(book.Title))
@@ -78,15 +78,15 @@ namespace BasicXml.Library.Impl
         private NewsPaper ParseToNewsPaper(XElement element)
         {
             var newsPaper = new NewsPaper();
-            newsPaper.Title = element.GetStringValue(ConstantsService.ELEMENT_NAME_TITLE);
-            newsPaper.City = element.GetStringValue(ConstantsService.ELEMENT_NAME_CITY);
-            newsPaper.Publisher = element.GetStringValue(ConstantsService.ELEMENT_NAME_PUBLISHER);
-            newsPaper.Year = int.Parse(element.GetStringValue(ConstantsService.ELEMENT_NAME_YEAR));
-            newsPaper.NumberOfPages = int.Parse(element.GetStringValue(ConstantsService.ELEMENT_NAME_PAGES));
-            newsPaper.Number = int.Parse(element.GetStringValue(ConstantsService.ELEMENT_NAME_NUMBER));
-            newsPaper.DateOfPublication = element.GetDate(ConstantsService.ELEMENT_NAME_PUBLISH_DATE);
-            newsPaper.ISSN = element.GetStringValue(ConstantsService.ELEMENT_NAME_ISSN);
-            newsPaper.Note = element.GetStringValue(ConstantsService.ELEMENT_NAME_NOTE);
+            newsPaper.Title = element.GetStringValue(Constants.ELEMENT_NAME_TITLE);
+            newsPaper.City = element.GetStringValue(Constants.ELEMENT_NAME_CITY);
+            newsPaper.Publisher = element.GetStringValue(Constants.ELEMENT_NAME_PUBLISHER);
+            newsPaper.Year = int.Parse(element.GetStringValue(Constants.ELEMENT_NAME_YEAR));
+            newsPaper.NumberOfPages = int.Parse(element.GetStringValue(Constants.ELEMENT_NAME_PAGES));
+            newsPaper.Number = int.Parse(element.GetStringValue(Constants.ELEMENT_NAME_NUMBER));
+            newsPaper.DateOfPublication = element.GetDate(Constants.ELEMENT_NAME_PUBLISH_DATE);
+            newsPaper.ISSN = element.GetStringValue(Constants.ELEMENT_NAME_ISSN);
+            newsPaper.Note = element.GetStringValue(Constants.ELEMENT_NAME_NOTE);
             if (newsPaper.Year <= 0
                 || newsPaper.NumberOfPages <= 0
                 || newsPaper.Number <= 0
@@ -101,14 +101,14 @@ namespace BasicXml.Library.Impl
         private Patent ParseToPatent(XElement element)
         {
             var patent = new Patent();
-            patent.Title = element.GetStringValue(ConstantsService.ELEMENT_NAME_TITLE);
-            patent.Inventors = element.GetListSubElements(ConstantsService.ELEMENT_NAME_INVENTOR);
-            patent.Country = element.GetStringValue(ConstantsService.ELEMENT_NAME_COUNTRY);
-            patent.RegistrationNumber = element.GetStringValue(ConstantsService.ELEMENT_NAME_REGISTRATION_NUMBER);
-            patent.DateOfApplication = element.GetDate(ConstantsService.ELEMENT_NAME_APPLICATION_DATE);
-            patent.DateOfPublication = element.GetDate(ConstantsService.ELEMENT_NAME_PUBLICATION_DATE);
-            patent.NumberOfPages = element.GetInt(ConstantsService.ELEMENT_NAME_PAGES);
-            patent.Note = element.GetStringValue(ConstantsService.ELEMENT_NAME_NOTE);
+            patent.Title = element.GetStringValue(Constants.ELEMENT_NAME_TITLE);
+            patent.Inventors = element.GetListSubElements(Constants.ELEMENT_NAME_INVENTOR);
+            patent.Country = element.GetStringValue(Constants.ELEMENT_NAME_COUNTRY);
+            patent.RegistrationNumber = element.GetStringValue(Constants.ELEMENT_NAME_REGISTRATION_NUMBER);
+            patent.DateOfApplication = element.GetDate(Constants.ELEMENT_NAME_APPLICATION_DATE);
+            patent.DateOfPublication = element.GetDate(Constants.ELEMENT_NAME_PUBLICATION_DATE);
+            patent.NumberOfPages = element.GetInt(Constants.ELEMENT_NAME_PAGES);
+            patent.Note = element.GetStringValue(Constants.ELEMENT_NAME_NOTE);
             if (string.IsNullOrEmpty(patent.Title)
                 || patent.Inventors?.Count() <= 0
                 || patent.NumberOfPages <= 0
@@ -122,12 +122,12 @@ namespace BasicXml.Library.Impl
         }
         public string GetPublishDate(XElement element)
         {
-            return element.Attribute(ConstantsService.ELEMENT_NAME_PUBLISH_DATE)?.Value;
+            return element.Attribute(Constants.ELEMENT_NAME_PUBLISH_DATE)?.Value;
         }
 
         public string GetLibraryName(XElement element)
         {
-            return element.Attribute(ConstantsService.ATTRIBUTE_NAME_LIBRARY)?.Value;
+            return element.Attribute(Constants.ATTRIBUTE_NAME_LIBRARY)?.Value;
         }
     }
 }

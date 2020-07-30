@@ -1,6 +1,6 @@
 ﻿namespace BasicXml.Library.Servises
 {
-    public static class ConstantsService
+    public static class Constants
     {
         public static string PUBLICATION = "publication";
         //attributes
