@@ -16,4 +16,6 @@
 
 :white_check_mark: Module 7 Basic XML
 
-:black_square_button: Module 8 Basic SQL
+:white_check_mark: Module 8 Basic SQL
+
+:black_square_button: Module 9 ADO.NET
