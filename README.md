@@ -18,4 +18,6 @@
 
 :white_check_mark: Module 8 Basic SQL
 
-:black_square_button: Module 9 ADO.NET
+:white_check_mark: Module 9 ADO.NET
+
+:black_square_button: Module 10 ORM
