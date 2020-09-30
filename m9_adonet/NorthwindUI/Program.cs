@@ -3,6 +3,7 @@ using NorthwindDAL.Impl.Repositories;
 using NorthwindPL.Impl;
 using System;
 using System.Configuration;
+using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Linq;
 using System.Threading.Channels;
@@ -18,7 +19,7 @@ namespace NorthwindPL
             var config = new AppConfiguration(ConfigurationManager.ConnectionStrings[connecionSettingsName]);
             var orderRepo = new OrderRepository(config);
 
-            /* Console.WriteLine("All orders:");
+            Console.WriteLine("All orders:");
              orderRepo.GetOrders().ToList().ForEach(o=>Console.WriteLine($"{o.Id} - {o.OrderDate} - {o.ShippedDate} - {o.State}"));
 
              int id = 10249;
@@ -79,7 +80,7 @@ namespace NorthwindPL
             Console.WriteLine($"History order for customer with id: {customerId}");
             var historyOrders = orderRepo.GetCustomerOrderHistory(customerId);
             historyOrders.ToList().ForEach(o=>Console.WriteLine($"ProductName: {o.ProductName}, Total: {o.Total}"));
-            */
+            
             
             Console.WriteLine("Customer orders detail");
             int orderId = 10250;
