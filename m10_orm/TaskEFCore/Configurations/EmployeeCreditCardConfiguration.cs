@@ -8,7 +8,10 @@ namespace TaskEFCore.Configurations
     {
         public void Configure(EntityTypeBuilder<EmployeeCreditCard> builder)
         {
-            builder.HasKey(e => e.CardNumber);
+            builder.ToTable("EmployeeCreditCards");
+
+            builder.HasKey(e => e.CardNumber)
+                .HasName("CardNumber");
 
             builder.HasIndex(e => e.EmployeeId)
                 .HasName("EmployeeCards");

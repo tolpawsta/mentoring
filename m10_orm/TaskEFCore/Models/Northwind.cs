@@ -41,7 +41,8 @@ namespace TaskEFCore.Models
             .ApplyConfiguration(new CustomerConfiguration())
             .ApplyConfiguration(new CategoryConfiguration())
             .ApplyConfiguration(new RegionConfiguration())
-            .ApplyConfiguration(new EmployeeConfiguration());
+            .ApplyConfiguration(new EmployeeConfiguration())
+            .ApplyConfiguration(new EmployeeCreditCardConfiguration());
         }
     }
 }
