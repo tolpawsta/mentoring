@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TaskEFCore.Models
 {
@@ -8,9 +9,8 @@ namespace TaskEFCore.Models
         public string CompanyName { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
-
+        public DateTime? FoundationDate { get; set; }
         public ICollection<Order> Orders { get; set; }
-
         public Customer()
         {
             Orders = new HashSet<Order>();

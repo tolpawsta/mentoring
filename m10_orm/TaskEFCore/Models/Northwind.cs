@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using System.Configuration;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace TaskEFCore.Models
 
         public Northwind()
         {
+           // Database.Migrate();
            // _connectionString = ConfigurationManager.ConnectionStrings[CONNECTIONNAME].ConnectionString;
         }
         public Northwind(DbContextOptions<Northwind> options) : base(options)
@@ -29,7 +31,7 @@ namespace TaskEFCore.Models
             if (!optionsBuilder.IsConfigured)
             {
                 //optionsBuilder.UseSqlServer(_connectionString);
-                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=Northwind;Trusted_Connection=true");
+                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=NorthwindTest;Trusted_Connection=true");
             }
 
         }
@@ -42,7 +44,8 @@ namespace TaskEFCore.Models
             .ApplyConfiguration(new CategoryConfiguration())
             .ApplyConfiguration(new RegionConfiguration())
             .ApplyConfiguration(new EmployeeConfiguration())
-            .ApplyConfiguration(new EmployeeCreditCardConfiguration());
+            .ApplyConfiguration(new EmployeeCreditCardConfiguration())
+            .ApplyConfiguration(new TerritoryConfiguration());           
         }
     }
 }

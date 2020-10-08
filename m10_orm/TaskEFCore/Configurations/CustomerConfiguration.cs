@@ -18,7 +18,6 @@ namespace TaskEFCore.Configurations
                 .HasColumnName("CustomerID")
                 .HasMaxLength(5);
             //TODO: .IsFixedLength();
-
             builder.Property(c => c.CompanyName)
                 .IsRequired()
                 .HasMaxLength(40);
@@ -29,6 +28,9 @@ namespace TaskEFCore.Configurations
 
             builder.Property(c => c.Phone)
                 .HasMaxLength(24);
+
+            builder.Property(c => c.FoundationDate)
+                .HasColumnType("datetime");           
         }
     }
 }

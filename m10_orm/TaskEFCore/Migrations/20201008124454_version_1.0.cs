@@ -8,21 +8,21 @@ namespace TaskEFCore.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
-                {
-                    CategoryID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryName = table.Column<string>(maxLength: 15, nullable: false),
-                    Description = table.Column<string>(type: "ntext", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("CategoryID", x => x.CategoryID);
-                });
+               name: "Categories",
+               columns: table => new
+               {
+                   CategoryID = table.Column<int>(nullable: false)
+                       .Annotation("SqlServer:Identity", "1, 1"),
+                   CategoryName = table.Column<string>(maxLength: 15, nullable: false),
+                   Description = table.Column<string>(type: "ntext", nullable: true)
+               },
+               constraints: table =>
+               {
+                   table.PrimaryKey("CategoryID", x => x.CategoryID);
+               });
 
             migrationBuilder.CreateTable(
-                name: "Customers",
+              name: "Customers",
                 columns: table => new
                 {
                     CustomerID = table.Column<string>(maxLength: 5, nullable: false),
@@ -36,7 +36,7 @@ namespace TaskEFCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Employee",
+                name: "Employees",
                 columns: table => new
                 {
                     EmployeeID = table.Column<int>(nullable: false)
@@ -51,7 +51,7 @@ namespace TaskEFCore.Migrations
                     table.ForeignKey(
                         name: "FK_Employees_Employees",
                         column: x => x.ReportTo,
-                        principalTable: "Employee",
+                        principalTable: "Employees",
                         principalColumn: "EmployeeID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -113,7 +113,7 @@ namespace TaskEFCore.Migrations
                     table.ForeignKey(
                         name: "FK_Orders_Employees",
                         column: x => x.EmployeeId,
-                        principalTable: "Employee",
+                        principalTable: "Employees",
                         principalColumn: "EmployeeID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -144,6 +144,25 @@ namespace TaskEFCore.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Territories",
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 20, nullable: false),
+                    TerritoryDescription = table.Column<string>(maxLength: 50, nullable: false),
+                    RegionId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("TerritoryID", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Terriroties_Region",
+                        column: x => x.RegionId,
+                        principalTable: "Region",
+                        principalColumn: "RegionID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "CategoryName",
                 table: "Categories",
@@ -156,12 +175,12 @@ namespace TaskEFCore.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_LastName",
-                table: "Employee",
+                table: "Employees",
                 column: "LastName");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_ReportTo",
-                table: "Employee",
+                table: "Employees",
                 column: "ReportTo");
 
             migrationBuilder.CreateIndex(
@@ -203,6 +222,11 @@ namespace TaskEFCore.Migrations
                 name: "ProductName",
                 table: "Products",
                 column: "ProductName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Territories_RegionId",
+                table: "Territories",
+                column: "RegionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -223,10 +247,13 @@ namespace TaskEFCore.Migrations
                 name: "Customers");
 
             migrationBuilder.DropTable(
-                name: "Employee");
+                name: "Employees");
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Territories");
         }
     }
 }

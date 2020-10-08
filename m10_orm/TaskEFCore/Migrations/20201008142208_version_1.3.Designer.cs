@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskEFCore.Models;
 
 namespace TaskEFCore.Migrations
 {
     [DbContext(typeof(Northwind))]
-    partial class NorthwindModelSnapshot : ModelSnapshot
+    [Migration("20201008142208_version_1.3")]
+    partial class version_13
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,56 +45,6 @@ namespace TaskEFCore.Migrations
                         .HasName("CategoryName");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            CategoryID = 1,
-                            Description = "Soft drinks, coffees, teas, beers, and ales",
-                            Name = "Beverages"
-                        },
-                        new
-                        {
-                            CategoryID = 2,
-                            Description = "Sweet and savory sauces, relishes, spreads, and seasonings",
-                            Name = "Condiments"
-                        },
-                        new
-                        {
-                            CategoryID = 3,
-                            Description = "Desserts, candies, and sweet breads",
-                            Name = "Confections"
-                        },
-                        new
-                        {
-                            CategoryID = 4,
-                            Description = "Cheeses",
-                            Name = "Dairy Products"
-                        },
-                        new
-                        {
-                            CategoryID = 5,
-                            Description = "Breads, crackers, pasta, and cereal",
-                            Name = "Grains/Cereals"
-                        },
-                        new
-                        {
-                            CategoryID = 6,
-                            Description = "Prepared meats",
-                            Name = "Meat/Poultry"
-                        },
-                        new
-                        {
-                            CategoryID = 7,
-                            Description = "Dried fruit and bean curd",
-                            Name = "Produce"
-                        },
-                        new
-                        {
-                            CategoryID = 8,
-                            Description = "Seaweed and fish",
-                            Name = "Seafood"
-                        });
                 });
 
             modelBuilder.Entity("TaskEFCore.Models.Customer", b =>
@@ -156,7 +108,7 @@ namespace TaskEFCore.Migrations
 
                     b.HasIndex("ReportTo");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employee");
                 });
 
             modelBuilder.Entity("TaskEFCore.Models.EmployeeCreditCard", b =>
@@ -300,112 +252,6 @@ namespace TaskEFCore.Migrations
                         .HasName("RedionID");
 
                     b.ToTable("Regions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            RegionDescription = "Eastern"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            RegionDescription = "Western"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            RegionDescription = "Northern"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            RegionDescription = "Southern"
-                        });
-                });
-
-            modelBuilder.Entity("TaskEFCore.Models.Territory", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<int>("RegionId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TerritoryDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.HasKey("Id")
-                        .HasName("TerritoryID");
-
-                    b.HasIndex("RegionId");
-
-                    b.ToTable("Territories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "01581",
-                            RegionId = 1,
-                            TerritoryDescription = "Westboro"
-                        },
-                        new
-                        {
-                            Id = "01833",
-                            RegionId = 1,
-                            TerritoryDescription = "Georgetow"
-                        },
-                        new
-                        {
-                            Id = "10019",
-                            RegionId = 1,
-                            TerritoryDescription = "New York"
-                        },
-                        new
-                        {
-                            Id = "80202",
-                            RegionId = 2,
-                            TerritoryDescription = "Denver"
-                        },
-                        new
-                        {
-                            Id = "94105",
-                            RegionId = 2,
-                            TerritoryDescription = "Menlo Park"
-                        },
-                        new
-                        {
-                            Id = "29202",
-                            RegionId = 4,
-                            TerritoryDescription = "Columbia"
-                        },
-                        new
-                        {
-                            Id = "03049",
-                            RegionId = 3,
-                            TerritoryDescription = "Hollis"
-                        },
-                        new
-                        {
-                            Id = "44122",
-                            RegionId = 3,
-                            TerritoryDescription = "Beachwood"
-                        },
-                        new
-                        {
-                            Id = "48304",
-                            RegionId = 3,
-                            TerritoryDescription = "Bloomfield Hills"
-                        },
-                        new
-                        {
-                            Id = "72716",
-                            RegionId = 4,
-                            TerritoryDescription = "Bentonville"
-                        });
                 });
 
             modelBuilder.Entity("TaskEFCore.Models.Employee", b =>
@@ -461,16 +307,6 @@ namespace TaskEFCore.Migrations
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .HasConstraintName("FK_Products_Categories")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TaskEFCore.Models.Territory", b =>
-                {
-                    b.HasOne("TaskEFCore.Models.Region", "Region")
-                        .WithMany("Territories")
-                        .HasForeignKey("RegionId")
-                        .HasConstraintName("FK_Terriroties_Region")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

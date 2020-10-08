@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TaskEFCore.Models;
 
 namespace TaskEFCore.Configurations
@@ -12,6 +8,8 @@ namespace TaskEFCore.Configurations
     {
         public void Configure(EntityTypeBuilder<Region> builder)
         {
+            builder.ToTable("Regions");
+
             builder.HasKey(r => r.Id)
                 .HasName("RedionID");
 
@@ -22,6 +20,29 @@ namespace TaskEFCore.Configurations
                 .HasColumnName("RegionDescription")
                 .IsRequired()
                 .HasMaxLength(50);
+
+            builder.HasData(
+                new Region()
+                {
+                    Id=1,
+                    RegionDescription = "Eastern"
+                },
+                new Region()
+                {
+                    Id = 2,
+                    RegionDescription = "Western"
+                },
+                new Region()
+                {
+                    Id = 3,
+                    RegionDescription = "Northern"
+                },
+                new Region()
+                {
+                    Id = 4,
+                    RegionDescription = "Southern"
+                }
+                );
         }
     }
 }

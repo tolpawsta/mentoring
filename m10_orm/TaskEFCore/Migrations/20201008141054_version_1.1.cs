@@ -22,7 +22,7 @@ namespace TaskEFCore.Migrations
                     table.ForeignKey(
                         name: "FK_EmployeeCreditCards_Empoyees",
                         column: x => x.EmployeeId,
-                        principalTable: "Employee",
+                        principalTable: "Employees",
                         principalColumn: "EmployeeID",
                         onDelete: ReferentialAction.Cascade);
                 });
