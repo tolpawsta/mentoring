@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using TaskEFCore.Models;
 
 namespace TaskEFCore.Migrations
 {
@@ -18,7 +19,7 @@ namespace TaskEFCore.Migrations
                },
                constraints: table =>
                {
-                   table.PrimaryKey("CategoryID", x => x.CategoryID);
+                   table.PrimaryKey("PK_CategoryID", x => x.CategoryID);
                });
 
             migrationBuilder.CreateTable(
@@ -32,7 +33,7 @@ namespace TaskEFCore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("CustomerID", x => x.CustomerID);
+                    table.PrimaryKey("PK_CustomerID", x => x.CustomerID);
                 });
 
             migrationBuilder.CreateTable(
@@ -47,7 +48,7 @@ namespace TaskEFCore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("EmployeeID", x => x.EmployeeID);
+                    table.PrimaryKey("PK_EmployeeID", x => x.EmployeeID);
                     table.ForeignKey(
                         name: "FK_Employees_Employees",
                         column: x => x.ReportTo,
@@ -66,7 +67,7 @@ namespace TaskEFCore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("RedionID", x => x.RegionID);
+                    table.PrimaryKey("PK_RedionID", x => x.RegionID);
                 });
 
             migrationBuilder.CreateTable(
@@ -81,7 +82,7 @@ namespace TaskEFCore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("ProductID", x => x.ProductID);
+                    table.PrimaryKey("PK_ProductID", x => x.ProductID);
                     table.ForeignKey(
                         name: "FK_Products_Categories",
                         column: x => x.CategoryId,
@@ -103,7 +104,7 @@ namespace TaskEFCore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("OrderID", x => x.OrderID);
+                    table.PrimaryKey("PK_OrderID", x => x.OrderID);
                     table.ForeignKey(
                         name: "FK_Orders_Customers",
                         column: x => x.CustomerId,
@@ -128,7 +129,7 @@ namespace TaskEFCore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order Details", x => new { x.OrderID, x.ProductID })
+                    table.PrimaryKey("PK_Order_Details", x => new { x.OrderID, x.ProductID })
                         .Annotation("SqlServer:Clustered", false);
                     table.ForeignKey(
                         name: "FK_Order_Details_Orders",
@@ -148,16 +149,16 @@ namespace TaskEFCore.Migrations
                 name: "Territories",
                 columns: table => new
                 {
-                    Id = table.Column<string>(maxLength: 20, nullable: false),
+                    TerritoryID = table.Column<string>(maxLength: 20, nullable: false),
                     TerritoryDescription = table.Column<string>(maxLength: 50, nullable: false),
-                    RegionId = table.Column<int>(nullable: false)
+                    RegionID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("TerritoryID", x => x.Id);
+                    table.PrimaryKey("PK_TerritoryID", x => x.TerritoryID);
                     table.ForeignKey(
                         name: "FK_Terriroties_Region",
-                        column: x => x.RegionId,
+                        column: x => x.RegionID,
                         principalTable: "Region",
                         principalColumn: "RegionID",
                         onDelete: ReferentialAction.Cascade);

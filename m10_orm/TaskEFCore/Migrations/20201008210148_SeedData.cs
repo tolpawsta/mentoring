@@ -20,7 +20,7 @@ namespace TaskEFCore.Migrations
                 .OldAnnotation("SqlServer:Identity", "1, 1");
             
             migrationBuilder.DropPrimaryKey(
-                name: "CategoryID",
+                name: "PK_CategoryID",
                 table: "Categories"
                 );
 
@@ -64,7 +64,7 @@ namespace TaskEFCore.Migrations
                 );
             
             migrationBuilder.DropPrimaryKey(
-                name: "RegionID",
+                name: "PK_RegionID",
                 table: "Regions");
 
             migrationBuilder.DropColumn(
@@ -99,10 +99,24 @@ namespace TaskEFCore.Migrations
                 table: "Regions",
                 column: "RegionID"
                 );
-            
+
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_TerritoryID",
+                table: "Territories");
+
+            migrationBuilder.DropColumn(
+                name: "TerritoryID",
+                table: "Territories"
+                );
+            migrationBuilder.AddColumn<int>(
+                name: "TerritoryID",
+                table: "Territories",
+                nullable: true
+                );
+
             migrationBuilder.InsertData(
                 table: "Territories",
-                columns: new[] { "Id", "RegionId", "TerritoryDescription" },
+                columns: new[] { "TerritoryID", "RegionId", "TerritoryDescription" },
                 values: new object[,]
                 {
                     { "01581", 1, "Westboro" },
@@ -116,6 +130,17 @@ namespace TaskEFCore.Migrations
                     { "29202", 4, "Columbia" },
                     { "72716", 4, "Bentonville" }
                 });
+            migrationBuilder.AlterColumn<int>(
+                name: "TerritoryID",
+                table: "Territories",
+                nullable: true,
+                oldNullable: false
+                );
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_TerritoryID",
+                table: "Territories",
+                column: "TerritoryID"
+                );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
