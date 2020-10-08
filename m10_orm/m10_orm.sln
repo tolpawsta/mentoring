@@ -5,7 +5,11 @@ VisualStudioVersion = 16.0.30330.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskEFCore", "TaskEFCore\TaskEFCore.csproj", "{33EA6E83-622E-47B8-9AE2-8EC626688D1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskEFCoreTest", "TaskEFCoreTest\TaskEFCoreTest.csproj", "{B64EFD1E-F6AE-48F0-826E-B83C72DDA5C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskEFCoreTest", "TaskEFCoreTest\TaskEFCoreTest.csproj", "{B64EFD1E-F6AE-48F0-826E-B83C72DDA5C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthwindConsole", "NorthwindConsole\NorthwindConsole.csproj", "{1EDF6A31-0111-4EDD-ACBF-1DD8E99AB8EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskEFCoreGenerate", "TaskEFCoreGenerate\TaskEFCoreGenerate.csproj", "{EF9D1449-1BC6-4C15-A9E0-BB38177F1A24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{B64EFD1E-F6AE-48F0-826E-B83C72DDA5C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B64EFD1E-F6AE-48F0-826E-B83C72DDA5C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B64EFD1E-F6AE-48F0-826E-B83C72DDA5C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EDF6A31-0111-4EDD-ACBF-1DD8E99AB8EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EDF6A31-0111-4EDD-ACBF-1DD8E99AB8EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EDF6A31-0111-4EDD-ACBF-1DD8E99AB8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EDF6A31-0111-4EDD-ACBF-1DD8E99AB8EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF9D1449-1BC6-4C15-A9E0-BB38177F1A24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF9D1449-1BC6-4C15-A9E0-BB38177F1A24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF9D1449-1BC6-4C15-A9E0-BB38177F1A24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF9D1449-1BC6-4C15-A9E0-BB38177F1A24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,15 +8,10 @@ namespace TaskEFCoreTest
     [TestClass]
     public class NorthwindTest
     {
-        private readonly string _connectionString;
-        public NorthwindTest()
-        {
-            _connectionString = ConfigurationManager.ConnectionStrings["NorthwindDB"].ConnectionString;
-        }
-        [TestMethod]
+       [TestMethod]
         public void GetOrdersByCategory()
         {
-            using (var db=new Northwind(_connectionString))
+            using (var db=new Northwind())
             {
                 foreach (var product in db.Products)
                 {

@@ -8,7 +8,23 @@ namespace TaskEFCore.Configurations
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-            throw new System.NotImplementedException();
+            builder.HasKey(c => c.CategoryID)
+                .HasName("CategoryID");
+
+            builder.Property(c => c.CategoryID)
+                .HasColumnName("CategoryID");
+
+            builder.HasIndex(c => c.Name)
+                .HasName("CategoryName");
+
+            builder.Property(c => c.Name)
+                .HasColumnName("CategoryName")
+                .IsRequired()
+                .HasMaxLength(15);
+
+            builder.Property(c => c.Description)
+                .HasColumnType("ntext");
+
         }
     }
 }

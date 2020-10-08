@@ -7,12 +7,9 @@ namespace TaskEFCore.Models
 {
     public class Category
     {
-        [Column("CategoryID")]
-        public int Id { get; set; }
-        [Column("CategoryName")]
+        public int CategoryID { get; set; }
         public string Name { get; set; }
-        [Column(TypeName ="ntext")]
-        public string Description { get; set; }        
+        public string Description { get; set; }
         public virtual ICollection<Product> Products { get; set; }
         public Category()
         {
