@@ -1,15 +1,37 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace TaskEFCore.Migrations
-{
-    public partial class SeedData : Migration
+ public partial class SeedData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<long>(
+                name: "CardNumber",
+                table: "EmployeeCreditCards",
+                type: "bigint",
+                maxLength: 16,
+                nullable: false,
+                oldClrType: typeof(long),
+                oldType: "bigint",
+                oldMaxLength: 16)
+                .OldAnnotation("SqlServer:Identity", "1, 1");
+            
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_CategoryID",
+                table: "Categories"
+                );
+
+            migrationBuilder.DropColumn(
+                name: "CategoryID",
+                table: "Categories"
+                );
+
+            migrationBuilder.AddColumn<int>(
+                name: "CategoryID",
+                table: "Categories",
+                nullable: true
+                );            
             
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "CategoryID", "Description", "CategoryName" },
+                columns: new[] {"CategoryID", "Description", "CategoryName" },
                 values: new object[,]
                 {
                     {1,"Soft drinks, coffees, teas, beers, and ales", "Beverages" },
@@ -22,9 +44,36 @@ namespace TaskEFCore.Migrations
                     {8,"Seaweed and fish", "Seafood" }
                 });
             
+            migrationBuilder.AlterColumn<int>(
+                name: "CategoryID",
+                table: "Categories",
+                nullable: false,
+                oldNullable: true
+                );
+            
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_CategoryID",
+                table: "Categories",
+                column: "CategoryID"
+                );
+            
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_RegionID",
+                table: "Regions");
+
+            migrationBuilder.DropColumn(
+                name: "RegionID",
+                table: "Regions"
+                );
+            migrationBuilder.AddColumn<int>(
+                name: "RegionID",
+                table: "Regions",
+                nullable: true
+                );
+                
             migrationBuilder.InsertData(
                 table: "Regions",
-                columns: new[] { "RegionID", "RegionDescription" },
+                columns: new[] {"RegionID", "RegionDescription" },
                 values: new object[,]
                 {
                     {1,"Eastern" },
@@ -32,7 +81,33 @@ namespace TaskEFCore.Migrations
                     {3,"Northern" },
                     {4,"Southern" }
                 });
+            
+            migrationBuilder.AlterColumn<int>(
+                name: "RegionID",
+                table: "Regions",
+                nullable: true,
+                oldNullable: false
+                );
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_RegionID",
+                table: "Regions",
+                column: "RegionID"
+                );
 
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_TerritoryID",
+                table: "Territories");
+
+            migrationBuilder.DropColumn(
+                name: "TerritoryID",
+                table: "Territories"
+                );
+            migrationBuilder.AddColumn<int>(
+                name: "TerritoryID",
+                table: "Territories",
+                nullable: true
+                );
+                        
             migrationBuilder.InsertData(
                 table: "Territories",
                 columns: new[] { "TerritoryID", "RegionId", "TerritoryDescription" },
@@ -49,6 +124,18 @@ namespace TaskEFCore.Migrations
                     { "29202", 4, "Columbia" },
                     { "72716", 4, "Bentonville" }
                 });
+                        
+            migrationBuilder.AlterColumn<int>(
+                name: "TerritoryID",
+                table: "Territories",
+                nullable: true,
+                oldNullable: false
+                );
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_TerritoryID",
+                table: "Territories",
+                column: "TerritoryID"
+                );
             
         }
 
@@ -162,7 +249,17 @@ namespace TaskEFCore.Migrations
             migrationBuilder.DeleteData(
                 table: "Regions",
                 keyColumn: "RegionID",
-                keyValue: 4);           
+                keyValue: 4);
+
+            migrationBuilder.AlterColumn<long>(
+                name: "CardNumber",
+                table: "EmployeeCreditCards",
+                type: "bigint",
+                maxLength: 16,
+                nullable: false,
+                oldClrType: typeof(long),
+                oldType: "bigint",
+                oldMaxLength: 16)
+                .Annotation("SqlServer:Identity", "1, 1");
         }
     }
-}

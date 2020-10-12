@@ -1,16 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Configuration;
-using System.Configuration;
-using System.Linq;
 using TaskEFCore.Configurations;
 
 namespace TaskEFCore.Models
 {
     public class Northwind : DbContext
     {
-        private const string CONNECTIONNAME = "NorthwindDB";
-        private readonly string _connectionString;
+        private const string CONNECTIONSTRING= "Server=(localdb)\\MSSQLLocalDB;Database=Northwind;Trusted_Connection=true";
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
@@ -18,8 +13,7 @@ namespace TaskEFCore.Models
 
         public Northwind()
         {
-           // Database.Migrate();
-           // _connectionString = ConfigurationManager.ConnectionStrings[CONNECTIONNAME].ConnectionString;
+           
         }
         public Northwind(DbContextOptions<Northwind> options) : base(options)
         {
@@ -31,9 +25,8 @@ namespace TaskEFCore.Models
             if (!optionsBuilder.IsConfigured)
             {
                 //optionsBuilder.UseSqlServer(_connectionString);
-                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=NorthwindTest;Trusted_Connection=true");
+                optionsBuilder.UseSqlServer(CONNECTIONSTRING);
             }
-
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,7 +38,7 @@ namespace TaskEFCore.Models
             .ApplyConfiguration(new RegionConfiguration())
             .ApplyConfiguration(new EmployeeConfiguration())
             .ApplyConfiguration(new EmployeeCreditCardConfiguration())
-            .ApplyConfiguration(new TerritoryConfiguration());           
+            .ApplyConfiguration(new TerritoryConfiguration());
         }
     }
 }

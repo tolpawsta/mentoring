@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Configuration;
 using System.Linq;
 using TaskEFCore.Models;
-using TaskEFCoreGenerate.Models;
 
 namespace NorthwindConsole
 {
@@ -10,54 +11,51 @@ namespace NorthwindConsole
     {
         static void Main(string[] args)
         {
-            string categoryName = GetCategoryName();
-            GetOrdersByCategory(categoryName);
-            // GetOrdersByCategoryGenerate(categoryName);
-        }
-
-        private static string GetCategoryName()
-        {
-            using (var db = new Northwind())
+            var connectionStringName = "NorthwindDB";
+            var services = new ServiceCollection();
+            services.AddDbContext<Northwind>(options => options.UseSqlServer(ConfigurationManager.ConnectionStrings[connectionStringName].ConnectionString));
+            using (var provider = services.BuildServiceProvider())
             {
-                return db.Categories.First().Name;
-            }
-        }
+                string categoryName = GetCategoryName(provider);
 
-        private static void GetOrdersByCategory(string categoryName)
-        {
-            using (var db = new Northwind())
-            {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Code First with Database");
                 Console.ForegroundColor = ConsoleColor.White;
+                OutputOrdersByCategory(categoryName, provider);
+            }
+        }
 
-                var orders = db.Orders.SelectMany(o => o.OrderDetails.Select(od => new
-                {
-                    od.Order.Customer,
-                    Coast = od.UnitPrice,
-                    od.Product,
-                    od.Product.Category
-                }).Where(od => od.Category.Name == categoryName));
+        private static string GetCategoryName(IServiceProvider provider)
+        {
+            var db = provider.GetService<Northwind>();
+            return db.Categories.First().Name;
+        }
 
-                Console.WriteLine($"Orders with category: {categoryName}");
+        private static void OutputOrdersByCategory(string categoryName, IServiceProvider provider)
+        {
+            var db = provider.GetService<Northwind>();
+            var orders = db.Orders.SelectMany(o => o.OrderDetails.Select(od => new
+            {
+                od.Order.Customer,
+                Coast = od.UnitPrice,
+                od.Product,
+                od.Product.Category
+            }).Where(od => od.Category.Name == categoryName));
+            Console.WriteLine($"Orders with category: {categoryName}");
+            try
+            {
                 foreach (var order in orders)
                 {
                     Console.WriteLine($"Customer: {order.Customer.Name}");
                     Console.WriteLine($"\tProduct: {order.Product.Name}, Coast: {order.Coast}, Category: {order.Category.Name}");
                 }
-
             }
-        }
-        private static void GetOrdersByCategoryGenerate(string categoryName)
-        {
-            using (var db = new NorthwindContext())
+            catch (Exception ex)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Generate DbContext by Scaffold-DbContext command");
-                Console.ForegroundColor = ConsoleColor.White;
-                var categories = db.Categories.Include(c => c.Products).Take(5).ToList();
-                categories.ForEach(p => Console.WriteLine(p.CategoryName));
+
+                Console.WriteLine(ex.Message,ex.StackTrace);
             }
+            
         }
     }
 }
