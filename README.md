@@ -20,4 +20,6 @@
 
 :white_check_mark: Module 9 ADO.NET
 
-:black_square_button: Module 10 ORM
+:white_check_mark: Module 10 ORM
+
+:black_square_button: Module 11 NoSQL

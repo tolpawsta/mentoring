@@ -20,7 +20,7 @@ namespace TaskEFCore.Configurations
                 .HasColumnName("RegionDescription")
                 .IsRequired()
                 .HasMaxLength(50);
-
+              
             builder.HasData(
                 new Region()
                 {

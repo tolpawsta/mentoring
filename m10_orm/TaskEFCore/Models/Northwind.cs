@@ -24,7 +24,6 @@ namespace TaskEFCore.Models
             // TODO: See DbContextOptionsBuilder
             if (!optionsBuilder.IsConfigured)
             {
-                //optionsBuilder.UseSqlServer(_connectionString);
                 optionsBuilder.UseSqlServer(CONNECTIONSTRING);
             }
         }

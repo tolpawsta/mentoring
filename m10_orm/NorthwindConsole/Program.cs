@@ -24,13 +24,11 @@ namespace NorthwindConsole
                 OutputOrdersByCategory(categoryName, provider);
             }
         }
-
         private static string GetCategoryName(IServiceProvider provider)
         {
             var db = provider.GetService<Northwind>();
             return db.Categories.First().Name;
         }
-
         private static void OutputOrdersByCategory(string categoryName, IServiceProvider provider)
         {
             var db = provider.GetService<Northwind>();
@@ -52,7 +50,6 @@ namespace NorthwindConsole
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine(ex.Message,ex.StackTrace);
             }
             
