@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoBDCore", "MongoBDCore\MongoBDCore.csproj", "{D33FA097-0E0F-469F-8F85-F3B293538B16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoDBCore", "MongoBDCore\MongoDBCore.csproj", "{D33FA097-0E0F-469F-8F85-F3B293538B16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDBConsole", "MongoDBConsole\MongoDBConsole.csproj", "{EB6525EF-40FE-4865-8F6F-E7C991CD9F34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{D33FA097-0E0F-469F-8F85-F3B293538B16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D33FA097-0E0F-469F-8F85-F3B293538B16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D33FA097-0E0F-469F-8F85-F3B293538B16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB6525EF-40FE-4865-8F6F-E7C991CD9F34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB6525EF-40FE-4865-8F6F-E7C991CD9F34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB6525EF-40FE-4865-8F6F-E7C991CD9F34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB6525EF-40FE-4865-8F6F-E7C991CD9F34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

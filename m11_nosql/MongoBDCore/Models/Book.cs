@@ -10,15 +10,13 @@ namespace MongoBDCore.Models
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-        [Required(ErrorMessage = "Name is required")]
-        [BsonRequired]
+        [Required(ErrorMessage = "Name is required")]        
         public string Name { get; set; }
         [BsonIgnoreIfNull(true)]
         public string Author { get; set; }
         [BsonIgnoreIfDefault(true)]
         [BsonDefaultValue(0)]
         public int Count { get; set; }
-        [BsonIgnoreIfNull]
         public ICollection<string> Genres { get; set; }
         [BsonIgnoreIfDefault(true)]
         [BsonDefaultValue(0)]
