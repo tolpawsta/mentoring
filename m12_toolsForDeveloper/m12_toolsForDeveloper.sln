@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StaticCodeAnalizer", "StaticCodeAnalizer", "{B8F9E083-1307-4045-AEDE-FE396971F7B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PackageManagers", "PackageManagers", "{CC101ED3-8E92-4691-8A73-BF2BAD600488}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AnalizableProjects", "AnalizableProjects", "{92169A48-ACB1-47A4-8253-30F17435852F}"
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{92169A48-ACB1-47A4-8253-30F17435852F} = {B8F9E083-1307-4045-AEDE-FE396971F7B8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {038E4567-3711-4B4E-9AD1-A639AD279932}
+	EndGlobalSection
+EndGlobal

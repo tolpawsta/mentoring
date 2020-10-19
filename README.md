@@ -23,3 +23,5 @@
 :white_check_mark: Module 10 ORM
 
 :black_square_button: Module 11 NoSQL
+
+:black_square_button: Module 12 Tools For Developer
