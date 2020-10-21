@@ -1,9 +1,10 @@
 ﻿using MongoBDCore.Models;
+using MongoDBConsole.Interfaces;
 using System.Collections.Generic;
 
 namespace MongoDBConsole.DataProviders
 {
-    public class BooksDataProvider
+    public class BooksDataProvider : IDataProvider
     {
         public IEnumerable<Book> GetBooks()
         {
@@ -15,7 +16,7 @@ namespace MongoDBConsole.DataProviders
                     Author="Tolkien",
                     Genres=new List<string>(new []
                     {
-                        "fantasy" 
+                        "fantasy"
                     }),
                     Count=5,
                     Year=2014,
@@ -37,17 +38,17 @@ namespace MongoDBConsole.DataProviders
                     Author="Tolkien",
                     Genres=new List<string>(new []
                     {
-                        "fantasy" 
+                        "fantasy"
                     }),
                     Count=3,
                     Year=2015
                 },
                 new Book()
                 {
-                    Name="Kolobok",                    
+                    Name="Kolobok",
                     Genres=new List<string>(new []
                     {
-                        "kids" 
+                        "kids"
                     }),
                     Count=10,
                     Year=2000

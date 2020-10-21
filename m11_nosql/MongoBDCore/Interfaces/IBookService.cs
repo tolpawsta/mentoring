@@ -6,9 +6,10 @@ namespace MongoBDCore.Interfaces
 {
     public interface IBookService
     {
-        public List<Book> GetAll();
+        List<Book> GetAll();
         void AddGengeToBookWith(Func<Book, bool> filter, string genreToAdd);
         void AddRange(IEnumerable<Book> books);
+        void Add(Book book);
         void DeleteBooks(Func<Book, bool> filter);
         List<string> GetAllAuthors();
         IEnumerable<Book> GetBooksWithoutAuthor();

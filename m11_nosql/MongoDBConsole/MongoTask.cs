@@ -1,18 +1,17 @@
 ﻿using MongoBDCore.Interfaces;
 using MongoDBConsole.DataProviders;
+using MongoDBConsole.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MongoDBConsole
 {
     public class MongoTask
     {
         private readonly IBookService _bookService;
-        private readonly ConsoleView _view;
-        private readonly BooksDataProvider dataProvider;
+        private readonly IView _view;
+        private readonly IDataProvider dataProvider;
 
-        public MongoTask(IBookService bookService, ConsoleView view, BooksDataProvider dataProvider)
+        public MongoTask(IBookService bookService, IView view, IDataProvider dataProvider)
         {
             _bookService = bookService;
             _view = view;

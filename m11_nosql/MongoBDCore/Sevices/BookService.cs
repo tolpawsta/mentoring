@@ -16,7 +16,11 @@ namespace MongoBDCore.Services
         public List<Book> GetAll() => _database.GetAll();
         public void AddRange(IEnumerable<Book> books)
         {
-            books.ToList().ForEach(_database.Create);
+            books.ToList().ForEach(_database.Append);
+        }
+        public void Add(Book book)
+        {
+            _database.Append(book);
         }
         public int FindCountBooksMoreThen(int countMoreThen, Func<Book, string> orederBy, int numberBooksInResult)
         {
@@ -47,31 +51,15 @@ namespace MongoBDCore.Services
         }
         public void IncrementCountOfBookOn(int count)
         {
-            var books = _database.GetAll();
-            foreach (var book in books)
-            {
-                book.Count += count;
-                _database.Update(book.Id, book);
-            }
+            _database.IncrementCountOfBooks(count);
         }
-        public void AddGengeToBookWith(Func<Book, bool> filter, string genreToAdd)
+        public void AddGengeToBookWith(Func<Book, bool> filter, string addedGenre)
         {
-            var filteredBooks = _database.GetAll().Where(filter);
-            foreach (var book in filteredBooks)
-            {
-                if (!book.Genres.Contains(genreToAdd))
-                {
-                    book.Genres.Add(genreToAdd);
-                    _database.Update(book.Id, book);
-                }
-            }
+            _database.InsertGenge(filter, addedGenre);
         }
         public void DeleteBooks(Func<Book, bool> filter)
         {
-            _database.GetAll()
-                     .Where(filter)
-                     .ToList()
-                     .ForEach(book => _database.Delete(book.Id));
+            _database.DeleteMany(filter);
         }
     }
 }

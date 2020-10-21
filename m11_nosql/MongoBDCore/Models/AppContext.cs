@@ -2,6 +2,7 @@
 using MongoBDCore.Interfaces;
 using MongoBDCore.Models.Configuration;
 using MongoDB.Driver;
+using MongoDBCore.Constants;
 
 namespace MongoBDCore.Models
 {
@@ -13,6 +14,6 @@ namespace MongoBDCore.Models
             var client = new MongoClient(settings.Value.ConnectionString);
             _database = client?.GetDatabase(settings.Value.DatabaseName);
         }
-        public IMongoCollection<Book> Books => _database.GetCollection<Book>(typeof(Book).Name);
+        public IMongoCollection<Book> Books => _database.GetCollection<Book>(AppContextConstants.BOOK_COLLECTION_NAME);
     }
 }

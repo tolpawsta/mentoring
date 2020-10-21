@@ -7,6 +7,7 @@ using MongoBDCore.Repositories;
 using MongoBDCore.Services;
 using MongoDBConsole.Constants;
 using MongoDBConsole.DataProviders;
+using MongoDBConsole.Interfaces;
 using System.Configuration;
 
 namespace MongoDBConsole.AppConfiguration
@@ -16,18 +17,18 @@ namespace MongoDBConsole.AppConfiguration
         public static void ConfigureServices(IServiceCollection services)
         {
             var configuration = new ConfigurationBuilder()
-                .AddJsonFile(ConfigConstants.JSONFILENAME)
+                .AddJsonFile(ConfigConstants.JSON_FILE_NAME)
                 .Build();            
             services.Configure<Settings>(options =>
             {
-                options.ConnectionString = configuration.GetSection(ConfigConstants.CONNECTIONSTRING).Value;
-                options.DatabaseName = configuration.GetSection(ConfigConstants.DATABASENAME).Value;
+                options.ConnectionString = configuration.GetSection(ConfigConstants.CONNECTION_STRING).Value;
+                options.DatabaseName = configuration.GetSection(ConfigConstants.DATABASE_NAME).Value;
             });
             services.AddTransient<IAppContext, AppContext>();
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<IBookService, BookService>();
-            services.AddTransient<BooksDataProvider>();
-            services.AddTransient<ConsoleView>();
+            services.AddTransient<IDataProvider,BooksDataProvider>();
+            services.AddTransient<IView,ConsoleView>();
             services.AddTransient<MongoTask>();
         }
     }
