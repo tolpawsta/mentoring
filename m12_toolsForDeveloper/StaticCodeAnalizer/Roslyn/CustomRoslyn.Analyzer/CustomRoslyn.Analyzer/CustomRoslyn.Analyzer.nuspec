@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package >
+  <metadata minClientVersion="2.5">
+    <id>CustomRoslyn.Analyzer</id>
+    <version>1.0.1</version>
+    <title>CustomRoslyn.Analyzer</title>
+    <authors>Pavel_Talochka</authors>    
+    <licenseUrl>http://licenses/LICENSE.txt</licenseUrl>
+    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>    
+    <iconUrl>http://images/icon.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>sample Roslyn Analyzer</description>
+    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <copyright>Copyright 2020</copyright>
+    <tags>Custom Roslyn Analyzer</tags>
+    <dependencies>
+      <dependency id="Microsoft.CodeAnalysis.Analyzers" version="2.9.8"/>
+      <dependency id="Microsoft.CodeAnalysis.CSharp" version="3.3.1"/>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="Microsoft.CodeAnalysis.Analyzers"/>
+      <frameworkAssembly assemblyName="Microsoft.CodeAnalysis.CSharp"/>
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="bin\Debug\netstandard2.0\*.dll" target="lib\netstandard2.0"/>
+    <file src="bin\Debug\netstandard2.0\*.pdb" target="lib\netstandard2.0"/>
+    <file src="readme.txt" target=""/>
+    <file src="licenses\LICENSE.txt" target=""/>
+    <file src="images\icon.png" target="images\"/>
+  </files>
+</package>
