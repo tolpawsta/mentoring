@@ -22,6 +22,8 @@
 
 :white_check_mark: Module 10 ORM
 
-:black_square_button: Module 11 NoSQL
+:white_check_mark: Module 11 NoSQL
 
-:black_square_button: Module 12 Tools For Developer
+:white_check_mark: Module 12 Tools For Developer
+
+:black_square_button: Module 13 HTTP Fundamentals
