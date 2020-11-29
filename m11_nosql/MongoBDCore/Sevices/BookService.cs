@@ -24,10 +24,9 @@ namespace MongoBDCore.Services
         }
         public int FindCountBooksMoreThen(int countMoreThen, Func<Book, string> orederBy, int numberBooksInResult)
         {
-            var queryBooks = _database.GetAll().Where(b => b.Count > countMoreThen)
+            var queryBooks = _database.GetFilteredBooks(book=>book.Count>countMoreThen)
                 .OrderBy(orederBy)
-                .Take(numberBooksInResult);
-            //TODO: ask for question
+                .Take(numberBooksInResult);            
             return queryBooks.Aggregate(0, (sum, book) => sum + book.Count);
         }
         public Book FindBookWithMaxCount()
@@ -38,16 +37,14 @@ namespace MongoBDCore.Services
         }
         public List<string> GetAllAuthors()
         {
-            return _database.GetAll()
-                            .Where(b => !String.IsNullOrEmpty(b.Author))
-                            .Select(b => b.Author)
+            return _database.GetProjection(b => !String.IsNullOrEmpty(b.Author), b => b.Author)
+                            .Cast<string>()                            
                             .Distinct()
                             .ToList();
         }
         public IEnumerable<Book> GetBooksWithoutAuthor()
         {
-            return _database.GetAll()
-                            .Where(b => String.IsNullOrEmpty(b.Author));
+            return _database.GetFilteredBooks(b => String.IsNullOrEmpty(b.Author));
         }
         public void IncrementCountOfBookOn(int count)
         {

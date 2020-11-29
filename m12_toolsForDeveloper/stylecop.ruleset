@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Custom RuleSet" Description="These rules focus on the most critical problems in your code, including potential security holes, application crashes, and other important logic and design errors. It is recommended to include this rule set in any custom rule set you create for your projects." ToolsVersion="16.0">
+  <Localization ResourceAssembly="StyleCop.CustomRules.dll" ResourceBaseName="Microsoft.VisualStudio.CodeAnalysis.RuleSets.Strings.Localized">
+    <Name Resource="CustomRules_Name" />
+    <Description Resource="CustomRules_Description" />
+  </Localization>
+  <Include Path="stylecop.ruleset" Action="Default" />  
+  <Rules AnalyzerId="CustomRules" RuleNamespace="StyleCop.CustomRules">
+    <Rule Id="CR0001" Action="Warning" />
+  </Rules>
+</RuleSet>

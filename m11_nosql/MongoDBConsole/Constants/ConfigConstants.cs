@@ -1,9 +1,4 @@
-﻿using MongoDB.Driver.Core.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MongoDBConsole.Constants
+﻿namespace MongoDBConsole.Constants
 {
     public static class ConfigConstants
     {

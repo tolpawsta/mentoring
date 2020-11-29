@@ -1,5 +1,4 @@
 ﻿using MongoBDCore.Interfaces;
-using MongoDBConsole.DataProviders;
 using MongoDBConsole.Interfaces;
 using System;
 

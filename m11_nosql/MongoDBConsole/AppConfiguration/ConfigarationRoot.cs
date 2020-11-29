@@ -8,7 +8,6 @@ using MongoBDCore.Services;
 using MongoDBConsole.Constants;
 using MongoDBConsole.DataProviders;
 using MongoDBConsole.Interfaces;
-using System.Configuration;
 
 namespace MongoDBConsole.AppConfiguration
 {

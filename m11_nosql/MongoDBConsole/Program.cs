@@ -1,10 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MongoBDCore.Interfaces;
-using MongoBDCore.Repositories;
 using MongoDBConsole.AppConfiguration;
-using MongoDBConsole.DataProviders;
-using System;
-using System.Linq;
 
 namespace MongoDBConsole
 {

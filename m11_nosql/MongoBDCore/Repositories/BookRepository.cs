@@ -1,6 +1,5 @@
 ﻿using MongoBDCore.Interfaces;
 using MongoBDCore.Models;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -25,6 +24,16 @@ namespace MongoBDCore.Repositories
         public Book GetBook(string id)
         {
             return _database.Books.Find<Book>(b => b.Id.Equals(id)).FirstOrDefault();            
+        }
+        public List<Book> GetFilteredBooks(Func<Book,bool> filter)
+        {
+            var filteredBooks = Builders<Book>.Filter.Where(book => filter(book));            
+            return _database.Books.Find<Book>(filteredBooks).ToList();
+        }
+        public List<object> GetProjection(Func<Book,bool> filter,Func<Book,object> projection)
+        {
+            var bookProjections = Builders<Book>.Projection.Include(book => projection(book));
+            return _database.Books.Find<Book>(b=>filter(b)).Project<object>(bookProjections).ToList();
         }
         public void Update(string id, Book book)
         {

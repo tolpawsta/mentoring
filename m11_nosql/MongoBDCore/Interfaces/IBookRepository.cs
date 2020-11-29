@@ -8,6 +8,8 @@ namespace MongoBDCore.Interfaces
     {
         List<Book> GetAll();
         Book GetBook(string id);
+        List<Book> GetFilteredBooks(Func<Book, bool> filter);
+        List<object> GetProjection(Func<Book, bool> filter, Func<Book, object> projection);
         List<Book> GetBooksWithCountLessThen(int count);
         void Append(Book book);
         void Update(string id, Book book);
