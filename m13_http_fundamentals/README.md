@@ -50,7 +50,6 @@ Accept | Формат |
 --- | --- |
 application/vnd.openxmlformats-officedocument.spreadsheetml.sheet	| Excel (.xlsx) |
 text/xml, application/xml	| XML |
-
 Любой другой или вовсе отсутствует |	Excel (.xlsx) |
 
    -	Указывать в ответе правильный Content-Type (так, чтобы при открытии из браузера – открывался нужный редактор/просмотрщик)
