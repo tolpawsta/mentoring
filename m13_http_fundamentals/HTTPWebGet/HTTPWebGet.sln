@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTTPWebGet.Librury", "HTTPWebGet.Librury\HTTPWebGet.Librury.csproj", "{414AAC1F-5753-4144-AF4D-7836282B7784}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTTPWebGet.UI", "HTTPWebGet.Console\HTTPWebGet.UI.csproj", "{EAE47CA3-D20F-46B0-AC30-DC9584AC9752}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{414AAC1F-5753-4144-AF4D-7836282B7784}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{414AAC1F-5753-4144-AF4D-7836282B7784}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{414AAC1F-5753-4144-AF4D-7836282B7784}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{414AAC1F-5753-4144-AF4D-7836282B7784}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAE47CA3-D20F-46B0-AC30-DC9584AC9752}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE47CA3-D20F-46B0-AC30-DC9584AC9752}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAE47CA3-D20F-46B0-AC30-DC9584AC9752}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAE47CA3-D20F-46B0-AC30-DC9584AC9752}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2937D29A-3976-4162-A610-A00DEB9A5304}
+	EndGlobalSection
+EndGlobal
